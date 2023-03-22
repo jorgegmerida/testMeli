@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use("/", routes());
-const host = "0.0.0.0" || process.env.HOST;
+const host = process.env.HOST;
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log("server up on ", port);
