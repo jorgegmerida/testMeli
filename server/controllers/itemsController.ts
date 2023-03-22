@@ -87,9 +87,9 @@ exports.itemId = async (
       }),
       (newItem.picture = responseFinalItemId.thumbnail),
       (newItem.condition = responseFinalItemId.condition),
-      (newItem.free_shipping = responseFinalItemId.shipping.free_shipping);
-    newItem.sold_quantity = responseFinalItemId.sold_quantity;
-    newItem.description = responseFinalItemDes.plain_text;
+      (newItem.free_shipping = responseFinalItemId.shipping.free_shipping),
+      (newItem.sold_quantity = responseFinalItemId.sold_quantity),
+      (newItem.description = responseFinalItemDes.plain_text);
 
     res.json({
       author: {
