@@ -100,7 +100,7 @@
 
 [jorge1920merida@gmail.com]
 
-Project Link: [https://gitlab.com/jorge62/geocoordinates.git](https://github.com/jorgegmerida/testMeli.git)
+Project Link: [https://github.com/jorgegmerida/testMeli.git](https://github.com/jorgegmerida/testMeli.git)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
