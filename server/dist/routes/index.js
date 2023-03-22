@@ -8,5 +8,6 @@ const router = express_1.default.Router();
 const itemsController = require("../controllers/itemsController");
 module.exports = () => {
     router.get("/api/items?:q", itemsController.itemsQuery);
+    router.get("/api/items/:id", itemsController.itemId);
     return router;
 };

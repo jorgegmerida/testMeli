@@ -1,28 +1,22 @@
 const axios = require("axios");
 const CircularJSON = require("circular-json");
+import { Request, Response } from "express";
+import {
+  Categories,
+  Item,
+  ItemDes,
+  Items,
+  responseItem,
+  responseItems,
+  TypedRequestQuery,
+  TypedResponse,
+} from "../utils/models";
 
-class Items {
-  items: item[] | null;
-}
-
-class item {
-  id: String;
-  title: String;
-  price: {
-    currency: String;
-    amount: Number;
-    decimals: Number;
-  };
-  picture: String;
-  condition: String;
-  free_shipping: Boolean;
-}
-
-class Categories {
-  categories: string[] | null;
-}
-
-exports.itemsQuery = async (req: any, res: any) => {
+exports.itemsQuery = async (
+  req: TypedRequestQuery<{ q: string }>,
+  res: TypedResponse<responseItems>,
+  next: Express.Application
+) => {
   let newItems = new Items();
   let newCategories = new Categories();
   newCategories.categories = [];
@@ -34,7 +28,6 @@ exports.itemsQuery = async (req: any, res: any) => {
     const response = await axios.get(`${process.env.ITEMS_QUERY}:${request.q}`);
     const resString = CircularJSON.stringify(response.data);
     const responseFinal = JSON.parse(resString);
-    console.log(responseFinal);
     responseFinal.results.map((e: any, index: any) => {
       newCategories.categories?.push(e.category_id);
       newItems.items?.push({
@@ -46,14 +39,14 @@ exports.itemsQuery = async (req: any, res: any) => {
         free_shipping: e.shipping.free_shipping,
       });
     });
-    const count = newCategories.categories.reduce((accumulator: any, value) => {
-      return { ...accumulator, [value]: (accumulator[value] || 0) + 1 };
-    }, {});
-    console.log(count);
+    // const count = newCategories.categories.reduce((accumulator: any, value) => {
+    //   return { ...accumulator, [value]: (accumulator[value] || 0) + 1 };
+    // }, {});
+    // console.log(count);
     res.json({
       author: {
         name: "jorge",
-        lastname: "merid",
+        lastname: "merida",
       },
       categories: newCategories.categories,
       items: newItems.items,
@@ -61,4 +54,49 @@ exports.itemsQuery = async (req: any, res: any) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+exports.itemId = async (
+  req: Request<{ id: string }>,
+  res: TypedResponse<responseItem>,
+  next: Express.Application
+) => {
+  try {
+    let newItem = new ItemDes();
+
+    const idItem = req.params.id;
+    const responseItemId = await axios.get(`${process.env.ITEM_ID}${idItem}`);
+    const resItemIdString = CircularJSON.stringify(responseItemId.data);
+    const responseFinalItemId = JSON.parse(resItemIdString);
+
+    const responseItemDes = await axios.get(
+      `${process.env.ITEM_ID}${idItem}/description`
+    );
+    const resStringItemDes = CircularJSON.stringify(responseItemDes.data);
+    const responseFinalItemDes = JSON.parse(resStringItemDes);
+
+    console.log(responseFinalItemId);
+    console.log(responseFinalItemDes);
+
+    (newItem.id = responseFinalItemId.id),
+      (newItem.title = responseFinalItemId.title),
+      (newItem.price = {
+        currency: responseFinalItemId.currency_id,
+        amount: responseFinalItemId.price,
+        decimals: responseFinalItemId.price,
+      }),
+      (newItem.picture = responseFinalItemId.thumbnail),
+      (newItem.condition = responseFinalItemId.condition),
+      (newItem.free_shipping = responseFinalItemId.shipping.free_shipping);
+    newItem.sold_quantity = responseFinalItemId.sold_quantity;
+    newItem.description = responseFinalItemDes.plain_text;
+
+    res.json({
+      author: {
+        name: "jorge",
+        lastname: "merida",
+      },
+      item: newItem,
+    });
+  } catch (error) {}
 };
