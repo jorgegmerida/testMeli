@@ -6,14 +6,12 @@ import { Header } from "./UI";
 export default function App() {
   return (
     <Router>
-      <Fragment>
-        <Header />
-        <Routes>
-          <Route path="/items?:search" element={<Items />} />
-          {/* <Route path="/items/:id" element={<EditarCliente />} /> */}
-          {/* <Route path="/" element={<} /> */}
-        </Routes>
-      </Fragment>
+      <Header />
+      <Routes>
+        <Route path="/*" element={<></>} />
+        <Route path="/:search" element={<Items />} />
+        {/* <Route path="/items/:id" element={<EditarCliente />} /> */}
+      </Routes>
     </Router>
   );
 }
