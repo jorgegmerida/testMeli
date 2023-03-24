@@ -1,0 +1,61 @@
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items:flex-start;
+    justify-content: center;
+    box-sizing: border-box;
+    height: auto;
+    background: #ffffff;
+    border:none;
+    margin-bottom: 5rem;
+    width: 71.6rem;
+    margin-top: 4rem;
+    padding: 1rem;
+}
+
+.items{
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    width: 100%;
+}
+
+.item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
+.itemPriceTitle{
+    flex-direction: column;
+    align-items: flex-start;
+    width: 600px;
+    height: 100px;
+    margin-top: 3rem;
+    margin-left: 1rem;
+}
+
+.itemTitle{
+    display: flex;
+    padding: auto;
+    width: 600px;
+}
+
+.itemPrice{
+    display: flex
+}
+
+.itemState{
+    display: flex;
+    width: 330px;
+    height: 30px;
+    margin-top: 3.5rem;
+    margin-right: 100px;
+}

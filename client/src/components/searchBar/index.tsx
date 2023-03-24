@@ -3,24 +3,27 @@ import { createSearchParams, Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import meliLogo from "../../assets/logo_meli.png";
 import meliSearch from "../../assets/search.png";
-import { useGetFetcher } from "../../hooks/fetcherHook";
+import { useGetFetcher } from "../../hooks/UseFetcher";
+import { useDispatch, useSelector } from "react-redux";
+import { setListProducts, setParam } from "../../store/slices/products";
 
 interface Props {}
 
 export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [search, saveSearch] = React.useState<string>("");
   const [shouldFetch, setShouldFetch] = React.useState<boolean>(false);
 
   const getProducts = async (e) => {
     e.preventDefault();
-
+    if (search.trim() === "") return;
     const response = await fetcher(
       `http://localhost:5000/api/items?q=${search}`
     );
-    // const resFinal = await kresponse
-    console.log(response);
+
+    dispatch(setListProducts(response));
     navigate({
       pathname: "/items",
       search: `?${createSearchParams({
@@ -34,7 +37,7 @@ export const SearchBar: React.FC = () => {
       <div className={styles.wrapper}>
         <div className={styles.wrapperLogo}>
           <Link
-            //   onClick={clearApplicationState}
+            //   onClick={limpiar}
             to="/"
           >
             <img src={meliLogo} alt={"LOGO_TITLE"} />
@@ -54,7 +57,7 @@ export const SearchBar: React.FC = () => {
               alt={"search"}
               width={"20px"}
               height={"20px"}
-              style={{ marginLeft: "-20px" }}
+              style={{ marginLeft: "-20px", marginTop: "4px" }}
             />
           </button>
         </form>
