@@ -37,12 +37,10 @@ exports.itemsQuery = async (
         picture: e.thumbnail,
         condition: e.condition,
         free_shipping: e.shipping.free_shipping,
+        state: e.seller_address.state.name,
       });
     });
-    // const count = newCategories.categories.reduce((accumulator: any, value) => {
-    //   return { ...accumulator, [value]: (accumulator[value] || 0) + 1 };
-    // }, {});
-    // console.log(count);
+
     res.json({
       author: {
         name: "jorge",

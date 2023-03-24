@@ -20,6 +20,7 @@ export class Item {
   picture: String;
   condition: String;
   free_shipping: Boolean;
+  state: string;
 }
 
 export class ItemDes {
