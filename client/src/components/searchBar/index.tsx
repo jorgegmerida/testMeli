@@ -43,7 +43,7 @@ export const SearchBar: React.FC = () => {
             <img src={meliLogo} alt={"LOGO_TITLE"} />
           </Link>
         </div>
-        <form onSubmit={getProducts} className={styles.wrapper__search_form}>
+        <form onSubmit={getProducts} className={styles.wrapper_search_form}>
           <input
             className={styles.wrapper_form_search_input}
             type="text"

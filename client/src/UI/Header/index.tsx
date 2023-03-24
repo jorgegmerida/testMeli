@@ -1,8 +1,17 @@
 import * as React from "react";
 import { SearchBar } from "../../components/searchBar";
 
-interface Props {}
-
 export const Header: React.FC = () => {
-  return <SearchBar />;
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        position: "relative",
+        width: "100vw",
+      }}
+    >
+      <SearchBar />
+    </div>
+  );
 };

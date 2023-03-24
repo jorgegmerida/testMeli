@@ -5,6 +5,7 @@ export const useGetItemsMoreResults = () => {
     const numberOfcategories = categories.reduce((accumulator: [], value) => {
       return { ...accumulator, [value]: (accumulator[value] || 0) + 1 };
     }, {});
+
     const majorCategory = Object.keys(numberOfcategories).reduce((a, b) =>
       numberOfcategories[a] > numberOfcategories[b] ? a : b
     );

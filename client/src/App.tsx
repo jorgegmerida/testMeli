@@ -11,7 +11,7 @@ export default function App() {
       <Router>
         <Header />
         <Routes>
-          <Route path="/*" element={<></>} />
+          <Route path="/" element={<></>} />
           <Route path="/:search" element={<Items />} />
           {/* <Route path="/items/:id" element={<EditarCliente />} /> */}
         </Routes>
