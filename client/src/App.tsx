@@ -4,6 +4,7 @@ import { Items } from "./components/items";
 import { Header } from "./UI";
 import { Provider } from "react-redux";
 import { store } from "../src/store";
+import { ItemDetail } from "./components/items/components/itemDetail";
 
 export default function App() {
   return (
@@ -12,8 +13,8 @@ export default function App() {
         <Header />
         <Routes>
           <Route path="/" element={<></>} />
-          <Route path="/:search" element={<Items />} />
-          {/* <Route path="/items/:id" element={<EditarCliente />} /> */}
+          <Route path=":search" element={<Items />} />
+          <Route path="/items/:id" element={<ItemDetail />} />
         </Routes>
       </Router>
     </Provider>

@@ -5,9 +5,7 @@ import meliLogo from "../../assets/logo_meli.png";
 import meliSearch from "../../assets/search.png";
 import { useGetFetcher } from "../../hooks/UseFetcher";
 import { useDispatch, useSelector } from "react-redux";
-import { setListProducts, setParam } from "../../store/slices/products";
-
-interface Props {}
+import { setListProducts, setShowItems } from "../../store/slices/products";
 
 export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
@@ -18,11 +16,11 @@ export const SearchBar: React.FC = () => {
 
   const getProducts = async (e) => {
     e.preventDefault();
+    dispatch(setShowItems(false));
     if (search.trim() === "") return;
     const response = await fetcher(
       `http://localhost:5000/api/items?q=${search}`
     );
-
     dispatch(setListProducts(response));
     navigate({
       pathname: "/items",
@@ -30,16 +28,24 @@ export const SearchBar: React.FC = () => {
         search: search,
       })}`,
     });
+    if (response.categories?.length !== 0 && response.items?.length !== 0) {
+      dispatch(setShowItems(true));
+    } else {
+      setTimeout(() => {
+        dispatch(setShowItems(true));
+      }, 4000);
+    }
+  };
+
+  const handlerClear = () => {
+    saveSearch("");
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.wrapperLogo}>
-          <Link
-            //   onClick={limpiar}
-            to="/"
-          >
+          <Link onClick={handlerClear} to="/">
             <img src={meliLogo} alt={"LOGO_TITLE"} />
           </Link>
         </div>

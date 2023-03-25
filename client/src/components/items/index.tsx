@@ -4,19 +4,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useGetItemsMoreResults } from "../../hooks/UseItemsMoreResults";
 import freeShipping from "../../assets/freeShipping.png";
-import { setListProducts, setParam } from "../../store/slices/products";
+import {
+  setListProducts,
+  setShowItems,
+  setShowIdItem,
+} from "../../store/slices/products";
 import { useGetFetcher } from "../../hooks/UseFetcher";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ReactLoading from "react-loading";
+import searchBad from "../../assets/searchBad.png";
 
 export const Items: React.FC = () => {
-  const [showItems, setShowItems] = React.useState<boolean>(false);
-  const { list, param } = useSelector((state: RootState) => state.products);
+  const { list, showItems } = useSelector((state: RootState) => state.products);
   const { items, categories } = list;
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const fetcher = useGetFetcher();
   const dispatch = useDispatch();
   const itemsMoreResults = useGetItemsMoreResults();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const param = searchParams.get("search");
@@ -25,7 +30,11 @@ export const Items: React.FC = () => {
         `http://localhost:5000/api/items?q=${param}`
       );
       if (response.categories?.length !== 0 && response.items?.length !== 0) {
-        setShowItems(true);
+        dispatch(setShowItems(true));
+      } else {
+        setTimeout(() => {
+          dispatch(setShowItems(true));
+        }, 4000);
       }
       dispatch(setListProducts(response));
     };
@@ -37,53 +46,89 @@ export const Items: React.FC = () => {
       const itemsFinal = itemsMoreResults(categories, items);
     }
   }, [items]);
-
-  React.useEffect(() => {
-    {
-      setTimeout(() => {
-        setShowItems(!showItems);
-      }, 5000);
-    }
-  }, []);
+  const handleDetailItem = (item) => {
+    const { id } = item;
+    dispatch(setShowIdItem(id));
+    navigate(`/items/${id}`);
+  };
 
   return (
     <div className={styles.container}>
       {showItems ? (
         <div className={styles.card}>
           <div className={styles.items}>
-            {items.slice(0, 4)?.map((item, index) => {
-              return (
-                <div key={index} className={styles.item}>
-                  <img
-                    src={item.picture}
-                    alt="item"
-                    width={"260px"}
-                    height={"290px"}
-                  />
-                  <div className={styles.itemPriceTitle}>
-                    <div className={styles.itemPrice}>
-                      $ {item.price.amount}
-                      {item.free_shipping ? (
-                        <div style={{ marginLeft: "1rem" }}>
-                          <img
-                            src={freeShipping}
-                            alt="item"
-                            width={"24px"}
-                            height={"24px"}
-                          />
+            {items.length !== 0 ? (
+              items.slice(0, 4)?.map((item, index) => {
+                return (
+                  <div key={index} className={styles.item}>
+                    <div
+                      style={{ display: "flex" }}
+                      onClick={(e) => handleDetailItem(item)}
+                    >
+                      <div className={styles.itemImg}>
+                        <img
+                          src={item.picture}
+                          alt="item"
+                          width={"260px"}
+                          height={"290px"}
+                        />
+                      </div>
+                      <div className={styles.itemPriceTitle}>
+                        <div className={styles.itemPrice}>
+                          $ {item.price.amount}
+                          {item.free_shipping ? (
+                            <div style={{ marginLeft: "1rem" }}>
+                              <img
+                                src={freeShipping}
+                                alt="item"
+                                width={"24px"}
+                                height={"24px"}
+                              />
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
-                      ) : (
-                        ""
-                      )}
+                        <div className={styles.itemTitle}>{item.title}</div>
+                      </div>
                     </div>
-                    <div className={styles.itemTitle}>{item.title}</div>
+                    <div className={styles.itemState}>
+                      <div>{item.state}</div>
+                    </div>
                   </div>
-                  <div className={styles.itemState}>
-                    <div>{item.state}</div>
+                );
+              })
+            ) : (
+              <div className={styles.containerBad}>
+                <div className={styles.containerImgSearchBad}>
+                  <img
+                    src={searchBad}
+                    alt="busqueda"
+                    width={"80px"}
+                    height={"80px"}
+                  />
+                </div>
+                <div className={styles.descriptionBad}>
+                  <div className={styles.titleBad}>
+                    No hay publicaciones que coincidan con tu búsqueda.
+                  </div>
+                  <div className={styles.containerUlBad}>
+                    <ul>
+                      <li>
+                        <b>Revisá la ortografía</b>de la palabra.
+                      </li>
+                      <li>
+                        Utilizá <b>palabras más genéricas</b> ó menos palabras.
+                      </li>
+                      <li>
+                        Navegá por las categorías para encontrar un producto
+                        similar
+                      </li>
+                    </ul>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            )}
           </div>
         </div>
       ) : (
