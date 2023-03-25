@@ -20,9 +20,7 @@ export const ItemDetail: React.FC = () => {
     const fetchItemDetail = async () => {
       const response = await fetcher(
         `http://localhost:5000/api/items/${
-          idItem === null || idItem === undefined || idItem.length === 0
-            ? params.id
-            : idItem
+          idItem.length === 0 ? params.id : idItem
         }`
       );
       console.log(response);
