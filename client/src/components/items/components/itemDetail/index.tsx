@@ -15,7 +15,7 @@ export const ItemDetail: React.FC = () => {
   const { idItem, itemDetail } = useSelector(
     (state: RootState) => state.products
   );
-
+  window.scrollTo({ top: 0, behavior: "smooth" });
   React.useEffect(() => {
     const fetchItemDetail = async () => {
       const response = await fetcher(
@@ -23,7 +23,6 @@ export const ItemDetail: React.FC = () => {
           idItem.length === 0 ? params.id : idItem
         }`
       );
-      console.log(response);
       if (response) {
         dispatch(setShowItems(true));
       } else {
