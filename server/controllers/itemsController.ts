@@ -97,7 +97,6 @@ exports.itemId = async (
         item: newItem,
       });
     } else {
-      console.log("error");
       res.json({ status: 500, mesagge: "No se encuantra el producto" });
     }
   } catch (error) {}

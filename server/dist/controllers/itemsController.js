@@ -82,7 +82,6 @@ next) => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         else {
-            console.log("error");
             res.json({ status: 500, mesagge: "No se encuantra el producto" });
         }
     }
