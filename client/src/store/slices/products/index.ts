@@ -14,9 +14,9 @@ export const productSlice = createSlice({
         price: { currency: "", amount: 0, decimals: 0 },
 
         picture: "",
-        codition: "",
+        condition: "",
         free_shipping: false,
-        sold_quantiti: 0,
+        sold_quantity: 0,
         description: "",
       },
     },
