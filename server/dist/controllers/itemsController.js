@@ -48,37 +48,43 @@ exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         console.error(error);
     }
 });
-exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.itemId = (req, res, 
+// resError: Response,
+next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let newItem = new models_1.ItemDes();
         const idItem = req.params.id;
         const responseItemId = yield axios.get(`${process.env.ITEM_ID}${idItem}`);
         const resItemIdString = CircularJSON.stringify(responseItemId.data);
         const responseFinalItemId = JSON.parse(resItemIdString);
-        const responseItemDes = yield axios.get(`${process.env.ITEM_ID}${idItem}/description`);
-        const resStringItemDes = CircularJSON.stringify(responseItemDes.data);
-        const responseFinalItemDes = JSON.parse(resStringItemDes);
-        console.log(responseFinalItemId);
-        console.log(responseFinalItemDes);
-        (newItem.id = responseFinalItemId.id),
-            (newItem.title = responseFinalItemId.title),
-            (newItem.price = {
-                currency: responseFinalItemId.currency_id,
-                amount: responseFinalItemId.price,
-                decimals: responseFinalItemId.price,
-            }),
-            (newItem.picture = responseFinalItemId.thumbnail),
-            (newItem.condition = responseFinalItemId.condition),
-            (newItem.free_shipping = responseFinalItemId.shipping.free_shipping),
-            (newItem.sold_quantity = responseFinalItemId.sold_quantity),
-            (newItem.description = responseFinalItemDes.plain_text);
-        res.json({
-            author: {
-                name: "jorge",
-                lastname: "merida",
-            },
-            item: newItem,
-        });
+        if (responseItemId) {
+            const responseItemDes = yield axios.get(`${process.env.ITEM_ID}${idItem}/description`);
+            const resStringItemDes = CircularJSON.stringify(responseItemDes.data);
+            const responseFinalItemDes = JSON.parse(resStringItemDes);
+            (newItem.id = responseFinalItemId.id),
+                (newItem.title = responseFinalItemId.title),
+                (newItem.price = {
+                    currency: responseFinalItemId.currency_id,
+                    amount: responseFinalItemId.price,
+                    decimals: responseFinalItemId.price,
+                }),
+                (newItem.picture = responseFinalItemId.thumbnail),
+                (newItem.condition = responseFinalItemId.condition),
+                (newItem.free_shipping = responseFinalItemId.shipping.free_shipping),
+                (newItem.sold_quantity = responseFinalItemId.sold_quantity),
+                (newItem.description = responseFinalItemDes.plain_text);
+            res.json({
+                author: {
+                    name: "jorge",
+                    lastname: "merida",
+                },
+                item: newItem,
+            });
+        }
+        else {
+            console.log("error");
+            res.json({ status: 500, mesagge: "No se encuantra el producto" });
+        }
     }
     catch (error) { }
 });

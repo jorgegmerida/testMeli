@@ -86,3 +86,7 @@ export interface responseItem {
     description: String;
   };
 }
+
+export interface TypedResponse<ResBody> extends Express.Response {
+  json: Send<ResBody, this>;
+}
