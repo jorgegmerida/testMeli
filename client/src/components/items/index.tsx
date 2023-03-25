@@ -8,6 +8,7 @@ import {
   setListProducts,
   setShowItems,
   setShowIdItem,
+  setItemDetail,
 } from "../../store/slices/products";
 import { useGetFetcher } from "../../hooks/UseFetcher";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -16,27 +17,42 @@ import searchBad from "../../assets/searchBad.png";
 
 export const Items: React.FC = () => {
   const { list, showItems } = useSelector((state: RootState) => state.products);
+
   const { items, categories } = list;
+
   const [searchParams] = useSearchParams();
+
   const fetcher = useGetFetcher();
+
   const dispatch = useDispatch();
+
   const itemsMoreResults = useGetItemsMoreResults();
+
   const navigate = useNavigate();
 
   React.useEffect(() => {
     const param = searchParams.get("search");
     const fetchItems = async () => {
-      const response = await fetcher(
-        `http://localhost:5000/api/items?q=${param}`
-      );
-      if (response.categories?.length !== 0 && response.items?.length !== 0) {
-        dispatch(setShowItems(true));
+      if (list.items.length === 0) {
+        try {
+          const response = await fetcher(
+            `${process.env.REACT_APP_FETCH_ITEMS}?q=${param}`
+          );
+          if (
+            response.categories?.length !== 0 &&
+            response.items?.length !== 0
+          ) {
+            dispatch(setShowItems(true));
+            dispatch(setListProducts(response));
+          } else {
+            dispatch(setShowItems(true));
+          }
+        } catch (error) {
+          console.log(error);
+        }
       } else {
-        setTimeout(() => {
-          dispatch(setShowItems(true));
-        }, 4000);
+        dispatch(setShowItems(true));
       }
-      dispatch(setListProducts(response));
     };
     fetchItems();
   }, []);
@@ -46,10 +62,20 @@ export const Items: React.FC = () => {
       const itemsFinal = itemsMoreResults(categories, items);
     }
   }, [items]);
-  const handleDetailItem = (item) => {
+
+  const handleDetailItem = async (item) => {
     const { id } = item;
-    dispatch(setShowIdItem(id));
-    navigate(`/items/${id}`);
+    dispatch(setShowItems(false));
+    const response = await fetcher(
+      `${process.env.REACT_APP_FETCH_ITEMS}/${id}`
+    );
+    if (response) {
+      dispatch(setItemDetail(response));
+      dispatch(setShowIdItem(id));
+      navigate(`/items/${id}`);
+    } else {
+      dispatch(setShowItems(true));
+    }
   };
 
   return (

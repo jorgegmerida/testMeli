@@ -8,36 +8,42 @@ import styles from "./styles.module.scss";
 import ReactLoading from "react-loading";
 
 export const ItemDetail: React.FC = () => {
-  const { showItems } = useSelector((state: RootState) => state.products);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const [showItemDetail, setShowItemDetail] = React.useState<boolean>(false);
+
   const fetcher = useGetFetcher();
+
   const dispatch = useDispatch();
+
   const params = useParams();
+
   const { idItem, itemDetail } = useSelector(
     (state: RootState) => state.products
   );
-  window.scrollTo({ top: 0, behavior: "smooth" });
+
   React.useEffect(() => {
     const fetchItemDetail = async () => {
-      const response = await fetcher(
-        `http://localhost:5000/api/items/${
-          idItem.length === 0 ? params.id : idItem
-        }`
-      );
-      if (response) {
-        dispatch(setShowItems(true));
+      if (params.id !== "" && (idItem && itemDetail.item.id) === "") {
+        const response = await fetcher(
+          `${process.env.REACT_APP_FETCH_ITEMS}/${params.id}`
+        );
+        if (response) {
+          dispatch(setItemDetail(response));
+          setShowItemDetail(true);
+        } else {
+          setShowItemDetail(true);
+        }
       } else {
-        setTimeout(() => {
-          dispatch(setShowItems(true));
-        }, 4000);
+        if (itemDetail) setShowItemDetail(true);
       }
-      dispatch(setItemDetail(response));
     };
     fetchItemDetail();
   }, []);
 
   return (
     <div className={styles.container}>
-      {showItems ? (
+      {showItemDetail ? (
         <div className={styles.card}>
           {itemDetail.item !== undefined && (
             <div className={styles.item}>
@@ -51,7 +57,10 @@ export const ItemDetail: React.FC = () => {
                   />
                 </div>
                 <div className={styles.titlePrice}>
-                  <div className={styles.productSell}>sdsdsddsdsdsdsd</div>
+                  <div className={styles.productSell}>
+                    {itemDetail.item.condition === "new" ? "Nuevo" : "Usado"} -{" "}
+                    {itemDetail.item.sold_quantity} vendidos
+                  </div>
                   <div className={styles.title}>{itemDetail.item.title}</div>
                   <div className={styles.price}>
                     $ {itemDetail.item.price.amount}

@@ -16,24 +16,28 @@ export const SearchBar: React.FC = () => {
 
   const getProducts = async (e) => {
     e.preventDefault();
+
     dispatch(setShowItems(false));
+
     if (search.trim() === "") return;
+
     const response = await fetcher(
-      `http://localhost:5000/api/items?q=${search}`
+      `${process.env.REACT_APP_FETCH_ITEMS}?q=${search}`
     );
+
     dispatch(setListProducts(response));
+
     navigate({
       pathname: "/items",
       search: `?${createSearchParams({
         search: search,
       })}`,
     });
+
     if (response.categories?.length !== 0 && response.items?.length !== 0) {
       dispatch(setShowItems(true));
     } else {
-      setTimeout(() => {
-        dispatch(setShowItems(true));
-      }, 4000);
+      dispatch(setShowItems(true));
     }
   };
 
