@@ -8,15 +8,19 @@ import {
   setListProducts,
   setShowItems,
   setShowIdItem,
-  setItemDetail,
+  setSearch,
 } from "../../store/slices/products";
 import { useGetFetcher } from "../../hooks/UseFetcher";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ReactLoading from "react-loading";
-import searchBad from "../../assets/searchBad.png";
+import { NotFoundProduct } from "./components/notFoundProduct";
 
 export const Items: React.FC = () => {
-  const { list, showItems } = useSelector((state: RootState) => state.products);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const { list, showItems, search } = useSelector(
+    (state: RootState) => state.products
+  );
 
   const { items, categories } = list;
 
@@ -30,52 +34,49 @@ export const Items: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const paramId = searchParams.get("search");
+
   React.useEffect(() => {
-    const param = searchParams.get("search");
     const fetchItems = async () => {
-      if (list.items.length === 0) {
-        try {
-          const response = await fetcher(
-            `${process.env.REACT_APP_FETCH_ITEMS}?q=${param}`
-          );
-          if (
-            response.categories?.length !== 0 &&
-            response.items?.length !== 0
-          ) {
-            dispatch(setShowItems(true));
-            dispatch(setListProducts(response));
-          } else {
-            dispatch(setShowItems(true));
-          }
-        } catch (error) {
-          console.log(error);
+      try {
+        const response = await fetcher(
+          `${process.env.REACT_APP_FETCH_ITEMS}?q=${paramId}`
+        );
+        if (paramId !== search) {
+          dispatch(setSearch(paramId));
         }
-      } else {
-        dispatch(setShowItems(true));
+        if (response.categories?.length !== 0 && response.items?.length !== 0) {
+          dispatch(setListProducts(response));
+          dispatch(setShowItems(true));
+        } else {
+          dispatch(setListProducts({ author: {}, categories: [], items: [] }));
+          dispatch(setShowItems(true));
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
-    fetchItems();
-  }, []);
-
-  React.useEffect(() => {
-    if (categories.length !== 0 && items.length !== 0) {
-      const itemsFinal = itemsMoreResults(categories, items);
-    }
-  }, [items]);
-
-  const handleDetailItem = async (item) => {
-    const { id } = item;
     dispatch(setShowItems(false));
-    const response = await fetcher(
-      `${process.env.REACT_APP_FETCH_ITEMS}/${id}`
-    );
-    if (response) {
-      dispatch(setItemDetail(response));
-      dispatch(setShowIdItem(id));
-      navigate(`/items/${id}`);
+    if (paramId !== search) {
+      fetchItems();
     } else {
       dispatch(setShowItems(true));
     }
+  }, [paramId]);
+  // React.useEffect(() => {
+  //   if (categories.length !== 0 && items.length !== 0) {
+  //     const itemsFinal = itemsMoreResults(categories, items);
+  //   }
+  // }, [items]);
+
+  const handleDetailItem = async (e, item) => {
+    e.preventDefault();
+    const { id } = item;
+    dispatch(setShowItems(false));
+    dispatch(setShowIdItem(id));
+    navigate({
+      pathname: `/items/${id}`,
+    });
   };
 
   return (
@@ -89,7 +90,7 @@ export const Items: React.FC = () => {
                   <div key={index} className={styles.item}>
                     <div
                       style={{ display: "flex" }}
-                      onClick={(e) => handleDetailItem(item)}
+                      onClick={(e) => handleDetailItem(e, item)}
                     >
                       <div className={styles.itemImg}>
                         <img
@@ -125,35 +126,7 @@ export const Items: React.FC = () => {
                 );
               })
             ) : (
-              <div className={styles.containerBad}>
-                <div className={styles.containerImgSearchBad}>
-                  <img
-                    src={searchBad}
-                    alt="busqueda"
-                    width={"80px"}
-                    height={"80px"}
-                  />
-                </div>
-                <div className={styles.descriptionBad}>
-                  <div className={styles.titleBad}>
-                    No hay publicaciones que coincidan con tu búsqueda.
-                  </div>
-                  <div className={styles.containerUlBad}>
-                    <ul>
-                      <li>
-                        <b>Revisá la ortografía</b>de la palabra.
-                      </li>
-                      <li>
-                        Utilizá <b>palabras más genéricas</b> ó menos palabras.
-                      </li>
-                      <li>
-                        Navegá por las categorías para encontrar un producto
-                        similar
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              <NotFoundProduct />
             )}
           </div>
         </div>

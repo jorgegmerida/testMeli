@@ -1,0 +1,34 @@
+.containerBad{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 150px;
+}
+
+.descriptionBad{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    margin-right: 4rem;
+}
+
+.containerImgSearchBad{
+    margin-top: 2rem;
+}
+
+.containerUlBad{
+    display: flex;
+    justify-content: left;
+    align-items:flex-start;
+    text-align: left;
+    margin-right: 11rem;
+}
+
+.titleBad{
+    font-size: 25px;
+    font-weight: 600;
+}
+
+li{
+    margin-top: 5px;
+}

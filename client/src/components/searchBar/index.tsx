@@ -5,14 +5,18 @@ import meliLogo from "../../assets/logo_meli.png";
 import meliSearch from "../../assets/search.png";
 import { useGetFetcher } from "../../hooks/UseFetcher";
 import { useDispatch, useSelector } from "react-redux";
-import { setListProducts, setShowItems } from "../../store/slices/products";
+import {
+  setListProducts,
+  setShowItems,
+  setSearch,
+} from "../../store/slices/products";
+import { RootState } from "../../store";
 
 export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [search, saveSearch] = React.useState<string>("");
-  const [shouldFetch, setShouldFetch] = React.useState<boolean>(false);
+  const { search } = useSelector((state: RootState) => state.products);
 
   const getProducts = async (e) => {
     e.preventDefault();
@@ -42,7 +46,7 @@ export const SearchBar: React.FC = () => {
   };
 
   const handlerClear = () => {
-    saveSearch("");
+    dispatch(setSearch(""));
   };
 
   return (
@@ -53,12 +57,15 @@ export const SearchBar: React.FC = () => {
             <img src={meliLogo} alt={"LOGO_TITLE"} />
           </Link>
         </div>
-        <form onSubmit={getProducts} className={styles.wrapper_search_form}>
+        <form
+          onSubmit={(e) => getProducts(e)}
+          className={styles.wrapper_search_form}
+        >
           <input
             className={styles.wrapper_form_search_input}
             type="text"
             placeholder={"Nunca dejes de buscar"}
-            onChange={(e) => saveSearch(e.target.value)}
+            onChange={(e) => dispatch(setSearch(e.target.value))}
             value={search}
           />
           <button type="submit" className={styles.wrapper_form_search_submit}>

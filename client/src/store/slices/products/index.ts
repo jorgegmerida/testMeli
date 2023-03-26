@@ -20,6 +20,7 @@ export const productSlice = createSlice({
         description: "",
       },
     },
+    search: "",
   },
   reducers: {
     setListProducts: (state, action) => {
@@ -34,6 +35,9 @@ export const productSlice = createSlice({
     setItemDetail: (state, action) => {
       state.itemDetail = action.payload;
     },
+    setSearch: (state, action) => {
+      state.search = action.payload;
+    },
   },
 });
 
@@ -41,5 +45,6 @@ export const { setListProducts } = productSlice.actions;
 export const { setShowItems } = productSlice.actions;
 export const { setShowIdItem } = productSlice.actions;
 export const { setItemDetail } = productSlice.actions;
+export const { setSearch } = productSlice.actions;
 
 export default productSlice.reducer;

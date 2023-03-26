@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useGetFetcher } from "../../../../hooks/UseFetcher";
 import { RootState } from "../../../../store";
-import { setItemDetail, setShowItems } from "../../../../store/slices/products";
+import { setItemDetail } from "../../../../store/slices/products";
 import styles from "./styles.module.scss";
 import ReactLoading from "react-loading";
 
@@ -24,18 +24,14 @@ export const ItemDetail: React.FC = () => {
 
   React.useEffect(() => {
     const fetchItemDetail = async () => {
-      if (params.id !== "" && (idItem && itemDetail.item.id) === "") {
-        const response = await fetcher(
-          `${process.env.REACT_APP_FETCH_ITEMS}/${params.id}`
-        );
-        if (response) {
-          dispatch(setItemDetail(response));
-          setShowItemDetail(true);
-        } else {
-          setShowItemDetail(true);
-        }
+      const response = await fetcher(
+        `${process.env.REACT_APP_FETCH_ITEMS}/${params.id}`
+      );
+      if (response) {
+        dispatch(setItemDetail(response));
+        setShowItemDetail(true);
       } else {
-        if (itemDetail) setShowItemDetail(true);
+        setShowItemDetail(true);
       }
     };
     fetchItemDetail();

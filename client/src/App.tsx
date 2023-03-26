@@ -5,6 +5,7 @@ import { Header } from "./UI";
 import { Provider } from "react-redux";
 import { store } from "../src/store";
 import { ItemDetail } from "./components/items/components/itemDetail";
+import { SearchBar } from "./components/searchBar";
 
 export default function App() {
   return (
