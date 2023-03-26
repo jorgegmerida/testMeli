@@ -37,7 +37,7 @@ exports.itemsQuery = async (
         picture: e.thumbnail,
         condition: e.condition,
         free_shipping: e.shipping.free_shipping,
-        state: e.seller_address.state.name,
+        state: e.address.state_name,
       });
     });
 
@@ -80,7 +80,7 @@ exports.itemId = async (
         (newItem.price = {
           currency: responseFinalItemId.currency_id,
           amount: responseFinalItemId.price,
-          decimals: responseFinalItemId.price,
+          decimals: responseFinalItemId.currency_id === "ARS" ? 2 : 2,
         }),
         (newItem.picture = responseFinalItemId.thumbnail),
         (newItem.condition = responseFinalItemId.condition),
