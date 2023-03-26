@@ -1,34 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { item, ItemDes, list } from "../../../models";
+import { CounterState } from "../../../models";
+import { INITIAL_STORE } from "../../../util/constants";
 
-export interface CounterState {
-  list: list;
-  showItems: boolean;
-  idItem: string;
-  itemDetail: ItemDes;
-  search: string;
-}
-
-const initialState: CounterState = {
-  list: { author: { name: "", lastname: "" }, categories: [], items: [] },
-  showItems: false,
-  idItem: "",
-  itemDetail: {
-    author: { name: "", lastname: "" },
-    item: {
-      id: "",
-      title: "",
-      price: { currency: "", amount: 0, decimals: 0 },
-
-      picture: "",
-      condition: "",
-      free_shipping: false,
-      sold_quantity: 0,
-      description: "",
-    },
-  },
-  search: "",
-};
+const initialState: CounterState = INITIAL_STORE;
 
 export const productSlice = createSlice({
   name: "products",

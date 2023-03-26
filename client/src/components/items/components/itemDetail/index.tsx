@@ -6,6 +6,7 @@ import { RootState } from "../../../../store";
 import { setItemDetail } from "../../../../store/slices/products";
 import styles from "./styles.module.scss";
 import ReactLoading from "react-loading";
+import { NOT_DESCRIPTION } from "../../../../util/constants";
 
 export const ItemDetail: React.FC = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -76,7 +77,7 @@ export const ItemDetail: React.FC = () => {
                 <div className={styles.description}>
                   {itemDetail.item.description !== ""
                     ? itemDetail.item.description
-                    : "Este producto aún no tiene descripcion "}
+                    : NOT_DESCRIPTION}
                 </div>
               </div>
             </div>

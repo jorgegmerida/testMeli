@@ -1,3 +1,11 @@
+export interface CounterState {
+  list: list;
+  showItems: boolean;
+  idItem: string;
+  itemDetail: ItemDes;
+  search: string;
+}
+
 export interface item {
   id: string;
   title: string;

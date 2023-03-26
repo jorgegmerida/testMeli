@@ -11,6 +11,7 @@ import {
   setSearch,
 } from "../../store/slices/products";
 import { RootState } from "../../store";
+import { PLACEHOLDER_INPUT } from "../../util/constants";
 
 export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
@@ -69,7 +70,7 @@ export const SearchBar: React.FC = () => {
           <input
             className={styles.wrapper_form_search_input}
             type="text"
-            placeholder={"Nunca dejes de buscar"}
+            placeholder={PLACEHOLDER_INPUT}
             onChange={(e) => dispatch(setSearch(e.target.value))}
             value={search}
           />
