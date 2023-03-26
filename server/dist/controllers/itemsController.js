@@ -48,9 +48,7 @@ exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         console.error(error);
     }
 });
-exports.itemId = (req, res, 
-// resError: Response,
-next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let newItem = new models_1.ItemDes();
         const idItem = req.params.id;

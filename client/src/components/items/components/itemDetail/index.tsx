@@ -24,14 +24,18 @@ export const ItemDetail: React.FC = () => {
 
   React.useEffect(() => {
     const fetchItemDetail = async () => {
-      const response = await fetcher(
-        `${process.env.REACT_APP_FETCH_ITEMS}/${params.id}`
-      );
-      if (response) {
-        dispatch(setItemDetail(response));
-        setShowItemDetail(true);
-      } else {
-        setShowItemDetail(true);
+      try {
+        const response = await fetcher(
+          `${process.env.REACT_APP_FETCH_ITEMS}/${params.id}`
+        );
+        if (response) {
+          dispatch(setItemDetail(response));
+          setShowItemDetail(true);
+        } else {
+          setShowItemDetail(true);
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
     fetchItemDetail();

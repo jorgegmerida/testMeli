@@ -57,7 +57,6 @@ exports.itemsQuery = async (
 exports.itemId = async (
   req: Request<{ id: string }>,
   res: TypedResponse<{}>,
-  // resError: Response,
   next: Express.Application
 ) => {
   try {
