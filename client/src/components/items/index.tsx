@@ -14,12 +14,13 @@ import { useGetFetcher } from "../../hooks/UseFetcher";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ReactLoading from "react-loading";
 import { NotFoundProduct } from "./components/notFoundProduct";
+import { item } from "../../models";
 
 export const Items: React.FC = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   const { list, showItems, search } = useSelector(
-    (state: RootState) => state.products
+    (state: RootState) => state.products.initialState
   );
 
   const { items, categories } = list;
@@ -38,10 +39,9 @@ export const Items: React.FC = () => {
 
   React.useEffect(() => {
     const fetchItems = async () => {
+      const url = `${process.env.REACT_APP_FETCH_ITEMS}?q=${paramId}`;
       try {
-        const response = await fetcher(
-          `${process.env.REACT_APP_FETCH_ITEMS}?q=${paramId}`
-        );
+        const response = await fetcher(url);
         if (paramId !== search) {
           dispatch(setSearch(paramId));
         }
@@ -69,7 +69,10 @@ export const Items: React.FC = () => {
   //   }
   // }, [items]);
 
-  const handleDetailItem = async (e, item) => {
+  const handleDetailItem = async (
+    e: React.MouseEvent<HTMLDivElement>,
+    item: item
+  ) => {
     e.preventDefault();
     const { id } = item;
     dispatch(setShowItems(false));
@@ -85,7 +88,7 @@ export const Items: React.FC = () => {
         <div className={styles.card}>
           <div className={styles.items}>
             {items.length !== 0 ? (
-              items.slice(0, 4)?.map((item, index) => {
+              items.slice(0, 4)?.map((item: item, index) => {
                 return (
                   <div key={index} className={styles.item}>
                     <div

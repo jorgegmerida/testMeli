@@ -19,15 +19,14 @@ export const ItemDetail: React.FC = () => {
   const params = useParams();
 
   const { idItem, itemDetail } = useSelector(
-    (state: RootState) => state.products
+    (state: RootState) => state.products.initialState
   );
 
   React.useEffect(() => {
     const fetchItemDetail = async () => {
+      const url = `${process.env.REACT_APP_FETCH_ITEMS}/${params.id}`;
       try {
-        const response = await fetcher(
-          `${process.env.REACT_APP_FETCH_ITEMS}/${params.id}`
-        );
+        const response = await fetcher(url);
         if (response) {
           dispatch(setItemDetail(response));
           setShowItemDetail(true);

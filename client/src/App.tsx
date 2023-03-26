@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Items } from "./components/items";
-import { Header } from "./UI";
+import { Header } from "./ui";
 import { Provider } from "react-redux";
 import { store } from "../src/store";
 import { ItemDetail } from "./components/items/components/itemDetail";

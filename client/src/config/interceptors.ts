@@ -6,7 +6,7 @@ export const axiosRequestInterceptor = () => {
   });
 };
 
-export const axiosInterceptor = () => {
+export const axiosResponseInterceptor = () => {
   axios.interceptors.response.use(
     (response: any) => {
       return response;

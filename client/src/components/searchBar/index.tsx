@@ -16,7 +16,9 @@ export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { search } = useSelector((state: RootState) => state.products);
+  const { search } = useSelector(
+    (state: RootState) => state.products.initialState
+  );
 
   const getProducts = async (e) => {
     e.preventDefault();
@@ -25,23 +27,26 @@ export const SearchBar: React.FC = () => {
 
     if (search.trim() === "") return;
 
-    const response = await fetcher(
-      `${process.env.REACT_APP_FETCH_ITEMS}?q=${search}`
-    );
+    const url = `${process.env.REACT_APP_FETCH_ITEMS}?q=${search}`;
+    try {
+      const response = await fetcher(url);
 
-    dispatch(setListProducts(response));
+      dispatch(setListProducts(response));
 
-    navigate({
-      pathname: "/items",
-      search: `?${createSearchParams({
-        search: search,
-      })}`,
-    });
+      navigate({
+        pathname: "/items",
+        search: `?${createSearchParams({
+          search: search,
+        })}`,
+      });
 
-    if (response.categories?.length !== 0 && response.items?.length !== 0) {
-      dispatch(setShowItems(true));
-    } else {
-      dispatch(setShowItems(true));
+      if (response.categories?.length !== 0 && response.items?.length !== 0) {
+        dispatch(setShowItems(true));
+      } else {
+        dispatch(setShowItems(true));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import {
-  axiosInterceptor,
+  axiosResponseInterceptor,
   axiosRequestInterceptor,
 } from "./config/interceptors";
 
 axiosRequestInterceptor();
-axiosInterceptor();
+axiosResponseInterceptor();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
