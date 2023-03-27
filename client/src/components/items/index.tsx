@@ -99,8 +99,8 @@ export const Items: React.FC = () => {
                         <img
                           src={item.picture}
                           alt="item"
-                          width={"260px"}
-                          height={"290px"}
+                          width={"230px"}
+                          height={"230px"}
                         />
                       </div>
                       <div className={styles.itemPriceTitle}>

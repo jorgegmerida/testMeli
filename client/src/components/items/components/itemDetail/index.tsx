@@ -52,8 +52,8 @@ export const ItemDetail: React.FC = () => {
                   <img
                     src={itemDetail.item.picture}
                     alt="product"
-                    width={"478px"}
-                    height={"468px"}
+                    width={"600px"}
+                    height={"478px"}
                   />
                 </div>
                 <div className={styles.titlePrice}>
