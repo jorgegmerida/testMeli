@@ -45,7 +45,7 @@ export const ItemDetail: React.FC = () => {
     <div className={styles.container}>
       {showItemDetail ? (
         <div className={styles.card}>
-          {itemDetail.item !== undefined && (
+          {itemDetail.item !== undefined ? (
             <div className={styles.item}>
               <div className={styles.productPrice}>
                 <div className={styles.product}>
@@ -81,6 +81,8 @@ export const ItemDetail: React.FC = () => {
                 </div>
               </div>
             </div>
+          ) : (
+            <div>sin detail</div>
           )}
         </div>
       ) : (
