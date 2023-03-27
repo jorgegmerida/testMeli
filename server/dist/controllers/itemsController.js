@@ -49,6 +49,7 @@ exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b, _c;
     try {
         let newItem = new models_1.ItemDes();
         const idItem = req.params.id;
@@ -80,8 +81,13 @@ exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             });
         }
         else {
-            res.json({ status: 500, mesagge: "No se encuantra el producto" });
+            res.json({ status: 404, message: "No se encuantra el producto" });
         }
     }
-    catch (error) { }
+    catch (error) {
+        res.json({
+            status: (_a = error.response) === null || _a === void 0 ? void 0 : _a.status,
+            message: (_c = (_b = error.response) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.message,
+        });
+    }
 });
