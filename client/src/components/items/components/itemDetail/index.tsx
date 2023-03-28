@@ -9,8 +9,6 @@ import ReactLoading from "react-loading";
 import { NOT_DESCRIPTION } from "../../../../util/constants";
 
 export const ItemDetail: React.FC = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
   const [showItemDetail, setShowItemDetail] = React.useState<boolean>(false);
 
   const fetcher = useGetFetcher();
@@ -52,8 +50,8 @@ export const ItemDetail: React.FC = () => {
                   <img
                     src={itemDetail.item.picture}
                     alt="product"
-                    width={"600px"}
-                    height={"478px"}
+                    width={"650px"}
+                    height={"550px"}
                   />
                 </div>
                 <div className={styles.titlePrice}>
@@ -82,7 +80,7 @@ export const ItemDetail: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div>sin detail</div>
+            <div>Sin detalle</div>
           )}
         </div>
       ) : (

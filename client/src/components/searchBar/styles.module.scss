@@ -3,23 +3,28 @@
     justify-content: center;
     align-items: center;
     background-color: yellow;
-    position: relative;
+    position: fixed;
     padding: 0.6rem 0;
     margin-top: 0;
     left:0;
-    width: 100%;
+    width:100vw;
 }
 
 .wrapper{
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100vw;
 }
 
 .wrapperLogo{
+    display: flex;
     margin-right: 3rem;
     margin-top: 0.1rem;
 }
 
 .wrapper_form_search_input{
+    
     width: 58.5rem;
     height: 1.9rem;
     margin-top: 0.05rem;
@@ -27,11 +32,12 @@
 }
 
 .wrapper_form_search_submit{
+    display: inline-block;
     width: 2.5rem;
-    height: 2.12rem;
+    height: 2rem;
     padding-left: 1.5rem;
     margin-left: -2.55rem;
-    margin-top: 0.12rem;
+    margin-top: 0.19rem;
     position: absolute;
     border: none;
     cursor: pointer;

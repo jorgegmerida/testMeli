@@ -17,8 +17,6 @@ import { NotFoundProduct } from "./components/notFoundProduct";
 import { item } from "../../models";
 
 export const Items: React.FC = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
   const { list, showItems, search } = useSelector(
     (state: RootState) => state.products.initialState
   );
@@ -38,6 +36,10 @@ export const Items: React.FC = () => {
   const paramId = searchParams.get("search");
 
   React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  React.useEffect(() => {
     const fetchItems = async () => {
       const url = `${process.env.REACT_APP_FETCH_ITEMS}?q=${paramId}`;
       try {
@@ -47,11 +49,10 @@ export const Items: React.FC = () => {
         }
         if (response.categories?.length !== 0 && response.items?.length !== 0) {
           dispatch(setListProducts(response));
-          dispatch(setShowItems(true));
         } else {
           dispatch(setListProducts({ author: {}, categories: [], items: [] }));
-          dispatch(setShowItems(true));
         }
+        dispatch(setShowItems(true));
       } catch (error) {
         console.log(error);
       }
@@ -87,49 +88,53 @@ export const Items: React.FC = () => {
       {showItems ? (
         <div className={styles.card}>
           <div className={styles.items}>
-            {items.length !== 0 ? (
-              items.slice(0, 4)?.map((item: item, index) => {
-                return (
-                  <div key={index} className={styles.item}>
-                    <div
-                      style={{ display: "flex" }}
-                      onClick={(e) => handleDetailItem(e, item)}
-                    >
-                      <div className={styles.itemImg}>
-                        <img
-                          src={item.picture}
-                          alt="item"
-                          width={"230px"}
-                          height={"230px"}
-                        />
-                      </div>
-                      <div className={styles.itemPriceTitle}>
-                        <div className={styles.itemPrice}>
-                          $ {item.price.amount}
-                          {item.free_shipping ? (
-                            <div style={{ marginLeft: "1rem" }}>
-                              <img
-                                src={freeShipping}
-                                alt="item"
-                                width={"24px"}
-                                height={"24px"}
-                              />
-                            </div>
-                          ) : (
-                            ""
-                          )}
+            {items ? (
+              items?.length !== 0 ? (
+                items?.slice(0, 4)?.map((item: item, index) => {
+                  return (
+                    <div key={index} className={styles.item}>
+                      <div
+                        style={{ display: "flex" }}
+                        onClick={(e) => handleDetailItem(e, item)}
+                      >
+                        <div className={styles.itemImg}>
+                          <img
+                            src={item.picture}
+                            alt="item"
+                            width={"230px"}
+                            height={"230px"}
+                          />
                         </div>
-                        <div className={styles.itemTitle}>{item.title}</div>
+                        <div className={styles.itemPriceTitle}>
+                          <div className={styles.itemPrice}>
+                            $ {item.price.amount}
+                            {item.free_shipping ? (
+                              <div style={{ marginLeft: "1rem" }}>
+                                <img
+                                  src={freeShipping}
+                                  alt="item"
+                                  width={"24px"}
+                                  height={"24px"}
+                                />
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                          <div className={styles.itemTitle}>{item.title}</div>
+                        </div>
+                      </div>
+                      <div className={styles.itemState}>
+                        <div>{item.state}</div>
                       </div>
                     </div>
-                    <div className={styles.itemState}>
-                      <div>{item.state}</div>
-                    </div>
-                  </div>
-                );
-              })
+                  );
+                })
+              ) : (
+                <NotFoundProduct />
+              )
             ) : (
-              <NotFoundProduct />
+              <div>Sin productos</div>
             )}
           </div>
         </div>

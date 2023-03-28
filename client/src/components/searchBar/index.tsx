@@ -21,6 +21,10 @@ export const SearchBar: React.FC = () => {
     (state: RootState) => state.products.initialState
   );
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const getProducts = async (e) => {
     e.preventDefault();
 
@@ -34,18 +38,18 @@ export const SearchBar: React.FC = () => {
 
       dispatch(setListProducts(response));
 
+      if (response.categories?.length !== 0 && response.items?.length !== 0) {
+        dispatch(setShowItems(true));
+      } else {
+        dispatch(setShowItems(true));
+      }
+
       navigate({
         pathname: "/items",
         search: `?${createSearchParams({
           search: search,
         })}`,
       });
-
-      if (response.categories?.length !== 0 && response.items?.length !== 0) {
-        dispatch(setShowItems(true));
-      } else {
-        dispatch(setShowItems(true));
-      }
     } catch (error) {
       console.log(error);
     }
@@ -54,7 +58,6 @@ export const SearchBar: React.FC = () => {
   const handlerClear = () => {
     dispatch(setSearch(""));
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>

@@ -5,7 +5,7 @@ import { Header } from "./ui";
 import { Provider } from "react-redux";
 import { store } from "../src/store";
 import { ItemDetail } from "./components/items/components/itemDetail";
-import { SearchBar } from "./components/searchBar";
+import { NotFound } from "./components/notFound";
 
 export default function App() {
   return (
@@ -16,6 +16,7 @@ export default function App() {
           <Route path="/" element={<></>} />
           <Route path=":search" element={<Items />} />
           <Route path="/items/:id" element={<ItemDetail />} />
+          <Route element={<NotFound />} />
         </Routes>
       </Router>
     </Provider>

@@ -1,7 +1,8 @@
 .container{
     display: flex;
     justify-content: center;
-    position:relative;
+    position:static;
+    margin-top: 8rem;
 }
 
 .card{
@@ -16,9 +17,8 @@
     border:none;
     margin-bottom: 5rem;
     width: 70rem;
-    margin-top: 4rem;
     padding: 1rem;
-    margin-left: 1rem;
+    margin-left: 0.1rem;
 }
 
 .items{
@@ -71,7 +71,6 @@
 
 .itemState{
     display: flex;
-    // margin-left: 12rem;
     padding: 0rem 0.5rem 0rem 14rem;
     width: 330px;
     height: 30px;

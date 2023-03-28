@@ -1,24 +1,25 @@
 .container{
     display: flex;
     justify-content: center;
-    position:relative;
+    position:static;
+    text-align: center;
+    margin-top: 8rem;
 }
 
 .card{
     display: flex;
     flex-direction: column;
     text-align: center;
-    align-items:flex-start;
     justify-content: center;
+    text-align: center;
     box-sizing: border-box;
     height: auto;
     background: #ffffff;
     border:none;
     margin-bottom: 5rem;
     width: 70rem;
-    margin-top: 4rem;
     padding: 1rem;
-    margin-left: 1rem;
+    margin-left: 0.1rem;
 }
 
 .item{
@@ -51,13 +52,13 @@
 
 .price{
     display: flex;
-    font-size: 36px;
+    font-size: 38px;
     color: rgba(0,0,0,.9);
 }
 
 .title{
     display: flex;
-    font-size: 22px;
+    font-size: 28px;
     font-weight: 560;
     text-align: left;
 }
@@ -78,6 +79,7 @@
     border: none;
     cursor: pointer;
     margin-top: 1.5rem;
+    margin-left: 0.05rem;
 }
 
 .descriptionContainer{
@@ -85,7 +87,7 @@
     flex-direction: column;
     justify-content: left;
     align-items: flex-start;
-    margin-top: 8rem;
+    margin-top: 7rem;
 }
 
 .descriptionTitle{
