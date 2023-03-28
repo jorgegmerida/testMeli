@@ -46,47 +46,6 @@ export interface TypedResponse<ResBody> extends Express.Response {
   json: Send<ResBody, this>;
 }
 
-export interface responseItems {
-  author: {
-    name: string;
-    lastname: string;
-  };
-  categories: string[];
-  items: {
-    id: String;
-    title: String;
-    price: {
-      currency: String;
-      amount: Number;
-      decimals: Number;
-    };
-    picture: String;
-    condition: String;
-    free_shipping: Boolean;
-  }[];
-}
-
-export interface responseItem {
-  author: {
-    name: string;
-    lastname: string;
-  };
-  item: {
-    id: String;
-    title: String;
-    price: {
-      currency: String;
-      amount: Number;
-      decimals: Number;
-    };
-    picture: String;
-    condition: String;
-    free_shipping: Boolean;
-    sold_quantity: Number;
-    description: String;
-  };
-}
-
 export interface TypedResponse<ResBody> extends Express.Response {
   json: Send<ResBody, this>;
 }
