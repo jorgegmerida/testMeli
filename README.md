@@ -50,11 +50,12 @@
 ### Prerequisites
 
 - npm
+
   ```sh
   npm install npm@latest -g
   ```
 
-### Installation
+### Installation and Usage
 
 1. Clone the repo https
 
@@ -87,21 +88,22 @@
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+## Test
 
-1. Run develop
-   ```sh
-   npm run dev
-   ```
-2. Run Test
+1. Run Test
+
    ```sh
    npm run test
    ```
-3. Run Test-Coverage
+
+2. Run Test-Coverage
+
    ```sh
    npm run test:coverage
    ```
-4. Run production
+
+3. Run production
+
    ```sh
    npm start
    ```
