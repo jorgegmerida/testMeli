@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ItemDes = exports.Item = exports.Items = exports.Categories = void 0;
+exports.Filter = exports.ItemDes = exports.Item = exports.Items = exports.Categories = void 0;
 class Categories {
 }
 exports.Categories = Categories;
@@ -13,3 +13,6 @@ exports.Item = Item;
 class ItemDes {
 }
 exports.ItemDes = ItemDes;
+class Filter {
+}
+exports.Filter = Filter;

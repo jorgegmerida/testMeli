@@ -13,11 +13,13 @@ const axios = require("axios");
 const CircularJSON = require("circular-json");
 const models_1 = require("../utils/models");
 exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     let newItems = new models_1.Items();
     let newCategories = new models_1.Categories();
+    let filter = new models_1.Filter();
     newCategories.categories = [];
     newItems.items = [];
+    filter.category = [];
     const request = req.query;
     try {
         const response = yield axios.get(`${process.env.ITEMS_QUERY}:${request.q}`);
@@ -35,6 +37,15 @@ exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                 state: (_d = e.address) === null || _d === void 0 ? void 0 : _d.state_name,
             });
         });
+        (_a = responseFinal.filters) === null || _a === void 0 ? void 0 : _a.map((f) => {
+            var _a;
+            (_a = f.values) === null || _a === void 0 ? void 0 : _a.map((v) => {
+                var _a;
+                (_a = v.path_from_root) === null || _a === void 0 ? void 0 : _a.map((category) => {
+                    filter.category.push(category);
+                });
+            });
+        });
         res.json({
             author: {
                 name: "jorge",
@@ -42,17 +53,18 @@ exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
             },
             categories: newCategories.categories,
             items: newItems.items,
+            filter,
         });
     }
     catch (error) {
         res.json({
-            status: (_a = error.response) === null || _a === void 0 ? void 0 : _a.status,
-            message: (_c = (_b = error.response) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.message,
+            status: (_b = error.response) === null || _b === void 0 ? void 0 : _b.status,
+            message: (_d = (_c = error.response) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.message,
         });
     }
 });
 exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d, _e, _f, _g, _h, _j, _k;
+    var _e, _f, _g, _h, _j, _k, _l;
     let newItem = new models_1.ItemDes();
     const idItem = req.params.id;
     try {
@@ -72,7 +84,7 @@ exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
                     }),
                     (newItem.picture = responseFinalItemId.thumbnail),
                     (newItem.condition = responseFinalItemId.condition),
-                    (newItem.free_shipping = (_d = responseFinalItemId.shipping) === null || _d === void 0 ? void 0 : _d.free_shipping),
+                    (newItem.free_shipping = (_e = responseFinalItemId.shipping) === null || _e === void 0 ? void 0 : _e.free_shipping),
                     (newItem.sold_quantity = responseFinalItemId.sold_quantity),
                     (newItem.description = responseFinalItemDes.plain_text);
                 res.json({
@@ -85,8 +97,8 @@ exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             }
             catch (error) {
                 res.json({
-                    status: (_e = error.response) === null || _e === void 0 ? void 0 : _e.status,
-                    message: (_g = (_f = error.response) === null || _f === void 0 ? void 0 : _f.data) === null || _g === void 0 ? void 0 : _g.message,
+                    status: (_f = error.response) === null || _f === void 0 ? void 0 : _f.status,
+                    message: (_h = (_g = error.response) === null || _g === void 0 ? void 0 : _g.data) === null || _h === void 0 ? void 0 : _h.message,
                 });
             }
         }
@@ -96,8 +108,8 @@ exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     }
     catch (error) {
         res.json({
-            status: (_h = error.response) === null || _h === void 0 ? void 0 : _h.status,
-            message: (_k = (_j = error.response) === null || _j === void 0 ? void 0 : _j.data) === null || _k === void 0 ? void 0 : _k.message,
+            status: (_j = error.response) === null || _j === void 0 ? void 0 : _j.status,
+            message: (_l = (_k = error.response) === null || _k === void 0 ? void 0 : _k.data) === null || _l === void 0 ? void 0 : _l.message,
         });
     }
 });

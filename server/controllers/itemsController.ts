@@ -4,6 +4,7 @@ import { parse, stringify, toJSON, fromJSON } from "flatted";
 import { Request } from "express";
 import {
   Categories,
+  Filter,
   ItemDes,
   Items,
   TypedRequestQuery,
@@ -17,14 +18,17 @@ exports.itemsQuery = async (
 ) => {
   let newItems = new Items();
   let newCategories = new Categories();
+  let filter = new Filter();
   newCategories.categories = [];
   newItems.items = [];
+  filter.category = [];
 
   const request = req.query;
 
   try {
     const response = await axios.get(`${process.env.ITEMS_QUERY}:${request.q}`);
     const responseFinal = response.data;
+
     responseFinal.results.map((e: any, index: any) => {
       newCategories.categories?.push(e.category_id);
       newItems.items?.push({
@@ -38,6 +42,14 @@ exports.itemsQuery = async (
       });
     });
 
+    responseFinal.filters?.map((f: any) => {
+      f.values?.map((v: any) => {
+        v.path_from_root?.map((category: any) => {
+          filter.category.push(category);
+        });
+      });
+    });
+
     res.json({
       author: {
         name: "jorge",
@@ -45,6 +57,7 @@ exports.itemsQuery = async (
       },
       categories: newCategories.categories,
       items: newItems.items,
+      filter,
     });
   } catch (error: any) {
     res.json({

@@ -21,6 +21,7 @@ export class Item {
   condition: String;
   free_shipping: Boolean;
   state: string;
+  filterCategory?: { id: string; name: string }[];
 }
 
 export class ItemDes {
@@ -36,6 +37,10 @@ export class ItemDes {
   free_shipping: Boolean;
   sold_quantity: Number;
   description: String;
+}
+
+export class Filter {
+  category: { id: string; name: string }[];
 }
 
 export interface TypedRequestQuery<T extends Query> extends Express.Request {
