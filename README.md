@@ -57,7 +57,7 @@
 
 ### Installation and Usage
 
-1. Clone the repo https
+1. Clone the repo
 
    ```sh
    git clone https://github.com/jorgegmerida/testMeli.git
