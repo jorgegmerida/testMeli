@@ -64,11 +64,12 @@ export const ItemsSearch: React.FC = () => {
       dispatch(setShowItems(true));
     }
   }, [paramId]);
-  React.useEffect(() => {
-    if (categories.length !== 0 && items.length !== 0) {
-      const itemsFinal = itemsMoreResults(categories, items);
-    }
-  }, [items]);
+
+  // React.useEffect(() => {
+  //   if (categories.length !== 0 && items.length !== 0) {
+  //     const itemsFinal = itemsMoreResults(categories, items);
+  //   }
+  // }, [items]);
 
   const handleDetailItem = async (
     e: React.MouseEvent<HTMLDivElement>,
