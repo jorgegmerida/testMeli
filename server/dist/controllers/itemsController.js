@@ -24,7 +24,7 @@ exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         const resString = CircularJSON.stringify(response.data);
         const responseFinal = JSON.parse(resString);
         responseFinal.results.map((e, index) => {
-            var _a, _b;
+            var _a, _b, _c, _d;
             (_a = newCategories.categories) === null || _a === void 0 ? void 0 : _a.push(e.category_id);
             (_b = newItems.items) === null || _b === void 0 ? void 0 : _b.push({
                 id: e.id,
@@ -32,8 +32,8 @@ exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                 price: { currency: e.currency_id, amount: e.price, decimals: e.price },
                 picture: e.thumbnail,
                 condition: e.condition,
-                free_shipping: e.shipping.free_shipping,
-                state: e.address.state_name,
+                free_shipping: (_c = e.shipping) === null || _c === void 0 ? void 0 : _c.free_shipping,
+                state: (_d = e.address) === null || _d === void 0 ? void 0 : _d.state_name,
             });
         });
         res.json({
@@ -53,7 +53,7 @@ exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d, _e, _f, _g, _h, _j;
+    var _d, _e, _f, _g, _h, _j, _k;
     let newItem = new models_1.ItemDes();
     const idItem = req.params.id;
     try {
@@ -74,7 +74,7 @@ exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
                     }),
                     (newItem.picture = responseFinalItemId.thumbnail),
                     (newItem.condition = responseFinalItemId.condition),
-                    (newItem.free_shipping = responseFinalItemId.shipping.free_shipping),
+                    (newItem.free_shipping = (_d = responseFinalItemId.shipping) === null || _d === void 0 ? void 0 : _d.free_shipping),
                     (newItem.sold_quantity = responseFinalItemId.sold_quantity),
                     (newItem.description = responseFinalItemDes.plain_text);
                 res.json({
@@ -87,8 +87,8 @@ exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             }
             catch (error) {
                 res.json({
-                    status: (_d = error.response) === null || _d === void 0 ? void 0 : _d.status,
-                    message: (_f = (_e = error.response) === null || _e === void 0 ? void 0 : _e.data) === null || _f === void 0 ? void 0 : _f.message,
+                    status: (_e = error.response) === null || _e === void 0 ? void 0 : _e.status,
+                    message: (_g = (_f = error.response) === null || _f === void 0 ? void 0 : _f.data) === null || _g === void 0 ? void 0 : _g.message,
                 });
             }
         }
@@ -98,8 +98,8 @@ exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     }
     catch (error) {
         res.json({
-            status: (_g = error.response) === null || _g === void 0 ? void 0 : _g.status,
-            message: (_j = (_h = error.response) === null || _h === void 0 ? void 0 : _h.data) === null || _j === void 0 ? void 0 : _j.message,
+            status: (_h = error.response) === null || _h === void 0 ? void 0 : _h.status,
+            message: (_k = (_j = error.response) === null || _j === void 0 ? void 0 : _j.data) === null || _k === void 0 ? void 0 : _k.message,
         });
     }
 });

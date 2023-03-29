@@ -23,6 +23,7 @@ exports.itemsQuery = async (
 
   try {
     const response = await axios.get(`${process.env.ITEMS_QUERY}:${request.q}`);
+
     const resString = CircularJSON.stringify(response.data);
     const responseFinal = JSON.parse(resString);
     responseFinal.results.map((e: any, index: any) => {
@@ -33,8 +34,8 @@ exports.itemsQuery = async (
         price: { currency: e.currency_id, amount: e.price, decimals: e.price },
         picture: e.thumbnail,
         condition: e.condition,
-        free_shipping: e.shipping.free_shipping,
-        state: e.address.state_name,
+        free_shipping: e.shipping?.free_shipping,
+        state: e.address?.state_name,
       });
     });
 
@@ -85,7 +86,7 @@ exports.itemId = async (
           }),
           (newItem.picture = responseFinalItemId.thumbnail),
           (newItem.condition = responseFinalItemId.condition),
-          (newItem.free_shipping = responseFinalItemId.shipping.free_shipping),
+          (newItem.free_shipping = responseFinalItemId.shipping?.free_shipping),
           (newItem.sold_quantity = responseFinalItemId.sold_quantity),
           (newItem.description = responseFinalItemDes.plain_text);
 
