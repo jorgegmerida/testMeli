@@ -6,7 +6,8 @@ import { RootState } from "store";
 import { setItemDetail, setShowItems } from "store/slices/products";
 import styles from "./styles.module.scss";
 import ReactLoading from "react-loading";
-import { NOT_DESCRIPTION } from "util/constants";
+import { NOT_DESCRIPTION } from "common/constants";
+import { formatMoney } from "common/utils";
 
 export const ItemDetail: React.FC = () => {
   const [showItemDetail, setShowItemDetail] = React.useState<boolean>(false);
@@ -60,7 +61,10 @@ export const ItemDetail: React.FC = () => {
                   </div>
                   <div className={styles.title}>{itemDetail.item.title}</div>
                   <div className={styles.price}>
-                    $ {itemDetail.item.price.amount}
+                    {formatMoney(
+                      itemDetail.item.price.currency,
+                      itemDetail.item.price.amount
+                    )}
                   </div>
                   <button onClick={() => {}} className={styles.button}>
                     Comprar

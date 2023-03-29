@@ -14,7 +14,8 @@ import { useGetFetcher } from "hooks/UseFetcher";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ReactLoading from "react-loading";
 import { NotFoundProduct } from "../NotFoundProduct";
-import { item } from "models";
+import { Item } from "models";
+import { formatMoney } from "common/utils";
 
 export const ItemsSearch: React.FC = () => {
   const { list, showItems, search } = useSelector(
@@ -73,7 +74,7 @@ export const ItemsSearch: React.FC = () => {
 
   const handleDetailItem = async (
     e: React.MouseEvent<HTMLDivElement>,
-    item: item
+    item: Item
   ) => {
     e.preventDefault();
     const { id } = item;
@@ -89,7 +90,7 @@ export const ItemsSearch: React.FC = () => {
           <div className={styles.items}>
             {items && search !== null ? (
               items?.length !== 0 ? (
-                items?.slice(0, 4)?.map((item: item, index) => {
+                items?.slice(0, 4)?.map((item: Item, index) => {
                   return (
                     <div key={index} className={styles.item}>
                       <div
@@ -106,7 +107,10 @@ export const ItemsSearch: React.FC = () => {
                         </div>
                         <div className={styles.itemPriceTitle}>
                           <div className={styles.itemPrice}>
-                            $ {item.price.amount}
+                            {formatMoney(
+                              item.price.currency,
+                              item.price.amount
+                            )}
                             {item.free_shipping && (
                               <div style={{ marginLeft: "1rem" }}>
                                 <img

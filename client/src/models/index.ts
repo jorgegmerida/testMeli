@@ -1,12 +1,12 @@
 export interface CounterState {
-  list: list;
+  list: List;
   showItems: boolean;
   idItem: string;
   itemDetail: ItemDes;
   search: string;
 }
 
-export interface item {
+export interface Item {
   id: string;
   title: string;
   price: {
@@ -38,7 +38,7 @@ export interface ItemDes {
   };
 }
 
-export interface list {
+export interface List {
   author: {
     name: string;
     lastname: string;

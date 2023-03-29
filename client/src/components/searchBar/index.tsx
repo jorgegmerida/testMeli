@@ -11,7 +11,7 @@ import {
   setSearch,
 } from "store/slices/products";
 import { RootState } from "store";
-import { PLACEHOLDER_INPUT } from "util/constants";
+import { PLACEHOLDER_INPUT } from "common/constants";
 
 export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
