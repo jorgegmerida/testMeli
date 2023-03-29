@@ -21,8 +21,7 @@ exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     const request = req.query;
     try {
         const response = yield axios.get(`${process.env.ITEMS_QUERY}:${request.q}`);
-        const resString = CircularJSON.stringify(response.data);
-        const responseFinal = JSON.parse(resString);
+        const responseFinal = response.data;
         responseFinal.results.map((e, index) => {
             var _a, _b, _c, _d;
             (_a = newCategories.categories) === null || _a === void 0 ? void 0 : _a.push(e.category_id);
@@ -58,8 +57,7 @@ exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     const idItem = req.params.id;
     try {
         const responseItemId = yield axios.get(`${process.env.ITEM_ID}${idItem}`);
-        const resItemIdString = CircularJSON.stringify(responseItemId.data);
-        const responseFinalItemId = JSON.parse(resItemIdString);
+        const responseFinalItemId = responseItemId.data;
         if (responseItemId) {
             try {
                 const responseItemDes = yield axios.get(`${process.env.ITEM_ID}${idItem}/description`);

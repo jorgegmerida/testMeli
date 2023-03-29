@@ -1,6 +1,7 @@
 const axios = require("axios");
 const CircularJSON = require("circular-json");
-import { Request, Response } from "express";
+import { parse, stringify, toJSON, fromJSON } from "flatted";
+import { Request } from "express";
 import {
   Categories,
   ItemDes,
@@ -23,9 +24,7 @@ exports.itemsQuery = async (
 
   try {
     const response = await axios.get(`${process.env.ITEMS_QUERY}:${request.q}`);
-
-    const resString = CircularJSON.stringify(response.data);
-    const responseFinal = JSON.parse(resString);
+    const responseFinal = response.data;
     responseFinal.results.map((e: any, index: any) => {
       newCategories.categories?.push(e.category_id);
       newItems.items?.push({
@@ -66,8 +65,7 @@ exports.itemId = async (
 
   try {
     const responseItemId = await axios.get(`${process.env.ITEM_ID}${idItem}`);
-    const resItemIdString = CircularJSON.stringify(responseItemId.data);
-    const responseFinalItemId = JSON.parse(resItemIdString);
+    const responseFinalItemId = responseItemId.data;
 
     if (responseItemId) {
       try {
