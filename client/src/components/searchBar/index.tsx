@@ -9,9 +9,11 @@ import {
   setListProducts,
   setShowItems,
   setSearch,
+  setErrors,
+  clearListProducts,
 } from "store/slices/products";
 import { RootState } from "store";
-import { PLACEHOLDER_INPUT } from "common/constants";
+import { INITIAL_STORE, PLACEHOLDER_INPUT } from "common/constants";
 
 export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
@@ -31,7 +33,7 @@ export const SearchBar: React.FC = () => {
     dispatch(setShowItems(false));
 
     if (search.trim() === "") return;
-
+    dispatch(clearListProducts(INITIAL_STORE.list));
     const url = `${process.env.REACT_APP_FETCH_ITEMS}?q=${search}`;
     try {
       const response = await fetcher(url);
@@ -41,7 +43,7 @@ export const SearchBar: React.FC = () => {
       if (response.categories?.length !== 0 && response.items?.length !== 0) {
         dispatch(setShowItems(true));
       } else {
-        dispatch(setShowItems(true));
+        dispatch(setErrors(true));
       }
 
       navigate({

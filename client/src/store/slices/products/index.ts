@@ -13,6 +13,9 @@ export const productSlice = createSlice({
     setListProducts: (state, action) => {
       state.initialState.list = action.payload;
     },
+    clearListProducts: (state, action) => {
+      state.initialState.list = action.payload;
+    },
     setShowItems: (state, action) => {
       state.initialState.showItems = action.payload;
     },
@@ -25,6 +28,9 @@ export const productSlice = createSlice({
     setSearch: (state, action) => {
       state.initialState.search = action.payload;
     },
+    setErrors: (state, action) => {
+      state.initialState.errors = action.payload;
+    },
   },
 });
 
@@ -33,5 +39,7 @@ export const { setShowItems } = productSlice.actions;
 export const { setShowIdItem } = productSlice.actions;
 export const { setItemDetail } = productSlice.actions;
 export const { setSearch } = productSlice.actions;
+export const { clearListProducts } = productSlice.actions;
+export const { setErrors } = productSlice.actions;
 
 export default productSlice.reducer;

@@ -4,6 +4,7 @@ export interface CounterState {
   idItem: string;
   itemDetail: ItemDes;
   search: string;
+  errors: boolean;
 }
 
 export interface Item {

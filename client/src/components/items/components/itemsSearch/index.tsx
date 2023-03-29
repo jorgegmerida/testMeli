@@ -9,6 +9,8 @@ import {
   setShowItems,
   setShowIdItem,
   setSearch,
+  clearListProducts,
+  setErrors,
 } from "store/slices/products";
 import { useGetFetcher } from "hooks/UseFetcher";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -16,9 +18,10 @@ import ReactLoading from "react-loading";
 import { NotFoundProduct } from "../NotFoundProduct";
 import { Item } from "models";
 import { formatMoney } from "common/utils";
+import { INITIAL_STORE } from "common/constants";
 
 export const ItemsSearch: React.FC = () => {
-  const { list, showItems, search } = useSelector(
+  const { list, showItems, search, errors } = useSelector(
     (state: RootState) => state.products.initialState
   );
 
@@ -42,28 +45,28 @@ export const ItemsSearch: React.FC = () => {
 
   React.useEffect(() => {
     const fetchItems = async () => {
+      dispatch(clearListProducts(INITIAL_STORE.list));
       const url = `${process.env.REACT_APP_FETCH_ITEMS}?q=${paramId}`;
       try {
         const response = await fetcher(url);
-        if (paramId !== search) {
-          dispatch(setSearch(paramId));
-        }
-        if (response.categories?.length !== 0 && response.items?.length !== 0) {
+
+        if (response.categories?.length !== 0 || response.items?.length !== 0) {
           dispatch(setListProducts(response));
         } else {
-          dispatch(setListProducts({ author: {}, categories: [], items: [] }));
+          dispatch(setErrors(true));
         }
-        dispatch(setShowItems(true));
       } catch (error) {
         console.log(error);
       }
     };
     dispatch(setShowItems(false));
+
     if (paramId !== search) {
+      dispatch(setErrors(false));
+      dispatch(setSearch(paramId));
       fetchItems();
-    } else {
-      dispatch(setShowItems(true));
     }
+    dispatch(setShowItems(true));
   }, [paramId]);
 
   // React.useEffect(() => {
@@ -85,60 +88,58 @@ export const ItemsSearch: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {showItems ? (
+      {showItems && items?.length !== 0 ? (
         <div className={styles.card}>
           <div className={styles.items}>
             {items && search !== null ? (
-              items?.length !== 0 ? (
-                items?.slice(0, 4)?.map((item: Item, index) => {
-                  return (
-                    <div key={index} className={styles.item}>
-                      <div
-                        style={{ display: "flex" }}
-                        onClick={(e) => handleDetailItem(e, item)}
-                      >
-                        <div className={styles.itemImg}>
-                          <img
-                            src={item.picture}
-                            alt="item"
-                            width={"230px"}
-                            height={"230px"}
-                          />
-                        </div>
-                        <div className={styles.itemPriceTitle}>
-                          <div className={styles.itemPrice}>
-                            {formatMoney(
-                              item.price.currency,
-                              item.price.amount
-                            )}
-                            {item.free_shipping && (
-                              <div style={{ marginLeft: "1rem" }}>
-                                <img
-                                  src={freeShipping}
-                                  alt="item"
-                                  width={"24px"}
-                                  height={"24px"}
-                                />
-                              </div>
-                            )}
-                          </div>
-                          <div className={styles.itemTitle}>{item.title}</div>
-                        </div>
+              items?.slice(0, 4)?.map((item: Item, index) => {
+                return (
+                  <div key={index} className={styles.item}>
+                    <div
+                      style={{ display: "flex" }}
+                      onClick={(e) => handleDetailItem(e, item)}
+                    >
+                      <div className={styles.itemImg}>
+                        <img
+                          src={item.picture}
+                          alt="item"
+                          width={"230px"}
+                          height={"230px"}
+                        />
                       </div>
-                      <div className={styles.itemState}>
-                        <div>{item.state}</div>
+                      <div className={styles.itemPriceTitle}>
+                        <div className={styles.itemPrice}>
+                          {formatMoney(
+                            item.price?.currency,
+                            item.price?.amount
+                          )}
+                          {item.free_shipping && (
+                            <div style={{ marginLeft: "1rem" }}>
+                              <img
+                                src={freeShipping}
+                                alt="item"
+                                width={"24px"}
+                                height={"24px"}
+                              />
+                            </div>
+                          )}
+                        </div>
+                        <div className={styles.itemTitle}>{item.title}</div>
                       </div>
                     </div>
-                  );
-                })
-              ) : (
-                <NotFoundProduct />
-              )
+                    <div className={styles.itemState}>
+                      <div>{item.state}</div>
+                    </div>
+                  </div>
+                );
+              })
             ) : (
               <div>Sin productos</div>
             )}
           </div>
         </div>
+      ) : items?.length === 0 && errors ? (
+        <NotFoundProduct />
       ) : (
         <ReactLoading
           type={"spin"}

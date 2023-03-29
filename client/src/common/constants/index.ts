@@ -17,6 +17,7 @@ export const INITIAL_STORE = {
     },
   },
   search: "",
+  errors: false,
 };
 
 export const NOT_DESCRIPTION = "Este producto aún no tiene descripcion";
