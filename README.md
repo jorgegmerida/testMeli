@@ -64,17 +64,7 @@
 
    ```
 
-2. Go to folder client => cd /testMeli/client => then
-
-   ```sh
-   npm install
-   ```
-
-   ```sh
-   npm start
-   ```
-
-3. Go to folder server => cd /testMeli/server => then
+2. Go to folder server => cd /testMeli/server => then
 
    ```sh
    npm install
@@ -82,6 +72,16 @@
 
    ```sh
    npm run dev
+   ```
+
+3. Go to folder client => cd /testMeli/client => then
+
+   ```sh
+   npm install
+   ```
+
+   ```sh
+   npm start
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
