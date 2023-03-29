@@ -102,12 +102,6 @@
    npm run test:coverage
    ```
 
-3. Run production
-
-   ```sh
-   npm start
-   ```
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
