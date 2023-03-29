@@ -1,17 +1,17 @@
 import * as React from "react";
 import { createSearchParams, Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
-import meliLogo from "../../assets/logo_meli.png";
-import meliSearch from "../../assets/search.png";
-import { useGetFetcher } from "../../hooks/UseFetcher";
+import meliLogo from "assets/logo_meli.png";
+import meliSearch from "assets/search.png";
+import { useGetFetcher } from "hooks/UseFetcher";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setListProducts,
   setShowItems,
   setSearch,
-} from "../../store/slices/products";
-import { RootState } from "../../store";
-import { PLACEHOLDER_INPUT } from "../../util/constants";
+} from "store/slices/products";
+import { RootState } from "store";
+import { PLACEHOLDER_INPUT } from "util/constants";
 
 export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
@@ -58,6 +58,7 @@ export const SearchBar: React.FC = () => {
   const handlerClear = () => {
     dispatch(setSearch(""));
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>

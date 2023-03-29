@@ -43,24 +43,25 @@
 .titlePrice{
     display: flex;
     flex-direction: column;
-    width: 275px;
+    width: 297px;
     justify-content: flex-start;
-    margin-right: 4rem;
+    margin-right: 3.5rem;
     gap: 1rem;
 }
 
 
 .price{
     display: flex;
-    font-size: 38px;
+    font-size: 50px;
     color: rgba(0,0,0,.9);
 }
 
 .title{
-    display: flex;
-    font-size: 28px;
+    display: inline-block;
+    font-size: 26px;
     font-weight: 560;
     text-align: left;
+    width: 297px;
 }
 
 .productSell{
@@ -78,7 +79,7 @@
     border-radius: 4px;
     border: none;
     cursor: pointer;
-    margin-top: 1.5rem;
+    margin-top: 3rem;
     margin-left: 0.05rem;
 }
 

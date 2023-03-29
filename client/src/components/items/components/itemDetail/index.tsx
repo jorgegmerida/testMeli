@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useGetFetcher } from "../../../../hooks/UseFetcher";
-import { RootState } from "../../../../store";
-import { setItemDetail } from "../../../../store/slices/products";
+import { useGetFetcher } from "hooks/UseFetcher";
+import { RootState } from "store";
+import { setItemDetail, setShowItems } from "store/slices/products";
 import styles from "./styles.module.scss";
 import ReactLoading from "react-loading";
-import { NOT_DESCRIPTION } from "../../../../util/constants";
+import { NOT_DESCRIPTION } from "util/constants";
 
 export const ItemDetail: React.FC = () => {
   const [showItemDetail, setShowItemDetail] = React.useState<boolean>(false);
@@ -17,7 +17,7 @@ export const ItemDetail: React.FC = () => {
 
   const params = useParams();
 
-  const { idItem, itemDetail } = useSelector(
+  const { idItem, itemDetail, showItems } = useSelector(
     (state: RootState) => state.products.initialState
   );
 
@@ -28,10 +28,9 @@ export const ItemDetail: React.FC = () => {
         const response = await fetcher(url);
         if (response) {
           dispatch(setItemDetail(response));
-          setShowItemDetail(true);
-        } else {
-          setShowItemDetail(true);
         }
+        setShowItemDetail(true);
+        dispatch(setShowItems(true));
       } catch (error) {
         console.log(error);
       }
@@ -41,7 +40,7 @@ export const ItemDetail: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {showItemDetail ? (
+      {showItemDetail && showItems ? (
         <div className={styles.card}>
           {itemDetail.item !== undefined ? (
             <div className={styles.item}>

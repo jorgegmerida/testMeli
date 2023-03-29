@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./styles.module.scss";
-import searchBad from "../../../../assets/searchBad.png";
+import searchBad from "assets/searchBad.png";
 
 export const NotFoundProduct: React.FC = () => {
   return (

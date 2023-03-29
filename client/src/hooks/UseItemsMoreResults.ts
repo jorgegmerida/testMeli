@@ -9,6 +9,7 @@ export const useGetItemsMoreResults = () => {
     const majorCategory = Object.keys(numberOfcategories).reduce((a, b) =>
       numberOfcategories[a] > numberOfcategories[b] ? a : b
     );
+
     categories.map((e, index) => {
       if (e === majorCategory) {
         indexCategories.push(index);
