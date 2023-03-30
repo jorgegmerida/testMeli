@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content:left;
+    text-align: left;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    width: 1114px;
+}
+
+.category{
+    display: flex;
+    text-align: left;
+}
+
+.breadcrumbNotActive {
+    color: #3C3C3C;
+ }
+    
+.breadcrumbActive {
+    color: #000000;
+}
+    

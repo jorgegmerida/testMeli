@@ -18,7 +18,7 @@ export interface Item {
   picture: string;
   condition: string;
   free_shipping: boolean;
-  state: string;
+  state?: string;
 }
 
 export interface ItemDes {
@@ -57,4 +57,10 @@ export interface List {
     condition: string;
     free_shipping: boolean;
   }[];
+  filter: { category: { id: string; name: string }[] };
+}
+
+export interface Icategory {
+  id: string;
+  name: string;
 }

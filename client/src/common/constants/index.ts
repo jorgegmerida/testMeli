@@ -1,5 +1,10 @@
 export const INITIAL_STORE = {
-  list: { author: { name: "", lastname: "" }, categories: [], items: [] },
+  list: {
+    author: { name: "", lastname: "" },
+    categories: [],
+    items: [],
+    filter: { category: [] },
+  },
   showItems: false,
   idItem: "",
   itemDetail: {

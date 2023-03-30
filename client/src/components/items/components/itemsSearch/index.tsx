@@ -2,7 +2,6 @@ import * as React from "react";
 import styles from "./styles.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
-import { useGetItemsMoreResults } from "hooks/UseItemsMoreResults";
 import freeShipping from "assets/freeShipping.png";
 import {
   setListProducts,
@@ -19,21 +18,20 @@ import { NotFoundProduct } from "../NotFoundProduct";
 import { Item } from "models";
 import { formatMoney } from "common/utils";
 import { INITIAL_STORE } from "common/constants";
+import { Breadcrumb } from "components/breadcrumb";
 
 export const ItemsSearch: React.FC = () => {
   const { list, showItems, search, errors } = useSelector(
     (state: RootState) => state.products.initialState
   );
 
-  const { items, categories } = list;
+  const { items, categories, filter } = list;
 
   const [searchParams] = useSearchParams();
 
   const fetcher = useGetFetcher();
 
   const dispatch = useDispatch();
-
-  const itemsMoreResults = useGetItemsMoreResults();
 
   const navigate = useNavigate();
 
@@ -69,12 +67,6 @@ export const ItemsSearch: React.FC = () => {
     dispatch(setShowItems(true));
   }, [paramId]);
 
-  // React.useEffect(() => {
-  //   if (categories.length !== 0 && items.length !== 0) {
-  //     const itemsFinal = itemsMoreResults(categories, items);
-  //   }
-  // }, [items]);
-
   const handleDetailItem = async (
     e: React.MouseEvent<HTMLDivElement>,
     item: Item
@@ -88,6 +80,7 @@ export const ItemsSearch: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <Breadcrumb list={list} />
       {showItems && items?.length !== 0 ? (
         <div className={styles.card}>
           <div className={styles.items}>

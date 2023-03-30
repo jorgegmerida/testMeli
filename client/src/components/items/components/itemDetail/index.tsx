@@ -8,6 +8,7 @@ import styles from "./styles.module.scss";
 import ReactLoading from "react-loading";
 import { NOT_DESCRIPTION } from "common/constants";
 import { formatMoney } from "common/utils";
+import { Breadcrumb } from "components/breadcrumb";
 
 export const ItemDetail: React.FC = () => {
   const [showItemDetail, setShowItemDetail] = React.useState<boolean>(false);
@@ -18,7 +19,7 @@ export const ItemDetail: React.FC = () => {
 
   const params = useParams();
 
-  const { idItem, itemDetail, showItems } = useSelector(
+  const { idItem, itemDetail, showItems, list } = useSelector(
     (state: RootState) => state.products.initialState
   );
 
@@ -41,6 +42,7 @@ export const ItemDetail: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <Breadcrumb list={list} />
       {showItemDetail && showItems ? (
         <div className={styles.card}>
           {itemDetail.item !== undefined ? (
