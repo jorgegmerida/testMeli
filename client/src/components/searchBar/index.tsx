@@ -45,9 +45,8 @@ export const SearchBar: React.FC = () => {
     try {
       const response = await fetcher(url);
 
-      dispatch(setListProducts(response));
-
       if (response.categories?.length !== 0 && response.items?.length !== 0) {
+        dispatch(setListProducts(response));
         dispatch(setShowItems(true));
       } else {
         dispatch(setErrors(true));
