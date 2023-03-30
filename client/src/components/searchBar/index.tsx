@@ -25,7 +25,7 @@ export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { search, itemDetail } = useSelector(
+  const { search } = useSelector(
     (state: RootState) => state.products.initialState
   );
   const location = useLocation();
