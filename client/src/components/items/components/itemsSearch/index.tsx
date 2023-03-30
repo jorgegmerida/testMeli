@@ -26,7 +26,7 @@ export const ItemsSearch: React.FC = () => {
     (state: RootState) => state.products.initialState
   );
 
-  const { items, categories, filter } = list;
+  const { items } = list;
 
   const [searchParams] = useSearchParams();
 

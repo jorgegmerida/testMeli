@@ -22,16 +22,14 @@ export const Breadcrumb: React.FC<Props> = ({ list }) => {
 
   const location = useLocation();
 
-  const { category } = list.filter;
-
   const getCategories = UseGetCategory();
 
   React.useEffect(() => {
     const categoryItem = getCategories(
       list?.categories,
       list?.items,
-      itemDetail.item?.id,
-      category
+      itemDetail?.item?.id,
+      list?.filter?.category
     );
     setCategoryItem(categoryItem);
   }, [itemDetail.item?.id]);
@@ -39,7 +37,7 @@ export const Breadcrumb: React.FC<Props> = ({ list }) => {
   return (
     <div className={styles.container}>
       {location.pathname !== `/items/${itemDetail.item?.id}` && showItems
-        ? category?.map((cat, index) => {
+        ? list?.filter?.category.map((cat, index) => {
             return (
               <div key={index} className={styles.category} id={"category"}>
                 <Link
@@ -51,7 +49,7 @@ export const Breadcrumb: React.FC<Props> = ({ list }) => {
                   }
                 >
                   {cat.name}
-                  {index < list.filter?.category.length - 1 && (
+                  {index < list?.filter?.category?.length - 1 && (
                     <span className={styles.breadcrumbArrow}>&gt;</span>
                   )}
                 </Link>

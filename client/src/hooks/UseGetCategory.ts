@@ -12,7 +12,7 @@ export const UseGetCategory = () => {
     let categoryResult = "";
     let categoryItem: Icategory = { id: "", name: "" };
 
-    categories.map((e: string) => {
+    categories?.map((e: string) => {
       items.map((i: Item) => {
         if (i.id === itemId) {
           categoryResult = e;
@@ -20,7 +20,7 @@ export const UseGetCategory = () => {
       });
     });
 
-    category.map((c) => {
+    category?.map((c) => {
       if (c.id === categoryResult) {
         categoryItem = c;
       }
