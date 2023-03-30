@@ -19,6 +19,7 @@ import { Item } from "models";
 import { formatMoney } from "common/utils";
 import { INITIAL_STORE } from "common/constants";
 import { Breadcrumb } from "components/breadcrumb";
+import { Helmet } from "react-helmet";
 
 export const ItemsSearch: React.FC = () => {
   const { list, showItems, search, errors } = useSelector(
@@ -79,69 +80,74 @@ export const ItemsSearch: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Breadcrumb list={list} />
-      {showItems && items?.length !== 0 ? (
-        <div className={styles.card}>
-          <div className={styles.items}>
-            {items && search !== null ? (
-              items?.slice(0, 4)?.map((item: Item, index) => {
-                return (
-                  <div key={index} className={styles.item}>
-                    <div
-                      style={{ display: "flex" }}
-                      onClick={(e) => handleDetailItem(e, item)}
-                    >
-                      <div className={styles.itemImg}>
-                        <img
-                          src={item.picture}
-                          alt="item"
-                          width={"230px"}
-                          height={"230px"}
-                        />
-                      </div>
-                      <div className={styles.itemPriceTitle}>
-                        <div className={styles.itemPrice}>
-                          {formatMoney(
-                            item.price?.currency,
-                            item.price?.amount
-                          )}
-                          {item.free_shipping && (
-                            <div style={{ marginLeft: "1rem" }}>
-                              <img
-                                src={freeShipping}
-                                alt="item"
-                                width={"24px"}
-                                height={"24px"}
-                              />
-                            </div>
-                          )}
+    <>
+      <Helmet>
+        <title>{search.length !== 0 ? search : "Home"}</title>
+      </Helmet>
+      <div className={styles.container}>
+        <Breadcrumb list={list} />
+        {showItems && items?.length !== 0 ? (
+          <div className={styles.card}>
+            <div className={styles.items}>
+              {items && search !== null ? (
+                items?.slice(0, 4)?.map((item: Item, index) => {
+                  return (
+                    <div key={index} className={styles.item}>
+                      <div
+                        style={{ display: "flex" }}
+                        onClick={(e) => handleDetailItem(e, item)}
+                      >
+                        <div className={styles.itemImg}>
+                          <img
+                            src={item.picture}
+                            alt="item"
+                            width={"230px"}
+                            height={"230px"}
+                          />
                         </div>
-                        <div className={styles.itemTitle}>{item.title}</div>
+                        <div className={styles.itemPriceTitle}>
+                          <div className={styles.itemPrice}>
+                            {formatMoney(
+                              item.price?.currency,
+                              item.price?.amount
+                            )}
+                            {item.free_shipping && (
+                              <div style={{ marginLeft: "1rem" }}>
+                                <img
+                                  src={freeShipping}
+                                  alt="item"
+                                  width={"24px"}
+                                  height={"24px"}
+                                />
+                              </div>
+                            )}
+                          </div>
+                          <div className={styles.itemTitle}>{item.title}</div>
+                        </div>
+                      </div>
+                      <div className={styles.itemState}>
+                        <div>{item.state}</div>
                       </div>
                     </div>
-                    <div className={styles.itemState}>
-                      <div>{item.state}</div>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <div>Sin productos</div>
-            )}
+                  );
+                })
+              ) : (
+                <div>Sin productos</div>
+              )}
+            </div>
           </div>
-        </div>
-      ) : items?.length === 0 && errors ? (
-        <NotFoundProduct />
-      ) : (
-        <ReactLoading
-          type={"spin"}
-          color={"yellow"}
-          height={"5%"}
-          width={"5%"}
-          className={styles.load}
-        />
-      )}
-    </div>
+        ) : items?.length === 0 && errors ? (
+          <NotFoundProduct />
+        ) : (
+          <ReactLoading
+            type={"spin"}
+            color={"yellow"}
+            height={"5%"}
+            width={"5%"}
+            className={styles.load}
+          />
+        )}
+      </div>
+    </>
   );
 };

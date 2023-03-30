@@ -6,7 +6,7 @@ export const INITIAL_STORE = {
     filter: { category: [] },
   },
   showItems: false,
-  idItem: "",
+  idItem: false,
   itemDetail: {
     author: { name: "", lastname: "" },
     item: {

@@ -1,7 +1,7 @@
 export interface CounterState {
   list: List;
   showItems: boolean;
-  idItem: string;
+  idItem: boolean;
   itemDetail: ItemDes;
   search: string;
   errors: boolean;

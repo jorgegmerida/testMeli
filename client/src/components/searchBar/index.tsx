@@ -1,5 +1,10 @@
 import * as React from "react";
-import { createSearchParams, Link, useNavigate } from "react-router-dom";
+import {
+  createSearchParams,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import styles from "./styles.module.scss";
 import meliLogo from "assets/logo_meli.png";
 import meliSearch from "assets/search.png";
@@ -14,14 +19,16 @@ import {
 } from "store/slices/products";
 import { RootState } from "store";
 import { INITIAL_STORE, PLACEHOLDER_INPUT } from "common/constants";
+import { Helmet } from "react-helmet";
 
 export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { search } = useSelector(
+  const { search, itemDetail } = useSelector(
     (state: RootState) => state.products.initialState
   );
+  const location = useLocation();
 
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -62,35 +69,40 @@ export const SearchBar: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.wrapper}>
-        <div className={styles.wrapperLogo}>
-          <Link onClick={handlerClear} to="/">
-            <img src={meliLogo} alt={"LOGO_TITLE"} />
-          </Link>
-        </div>
-        <form
-          onSubmit={(e) => getProducts(e)}
-          className={styles.wrapper_search_form}
-        >
-          <input
-            className={styles.wrapper_form_search_input}
-            type="text"
-            placeholder={PLACEHOLDER_INPUT}
-            onChange={(e) => dispatch(setSearch(e.target.value))}
-            value={search}
-          />
-          <button type="submit" className={styles.wrapper_form_search_submit}>
-            <img
-              src={meliSearch}
-              alt={"search"}
-              width={"20px"}
-              height={"20px"}
-              style={{ marginLeft: "-20px", marginTop: "4px" }}
+    <>
+      <Helmet>
+        <title>{location.pathname === "/" && "Home"}</title>
+      </Helmet>
+      <div className={styles.container}>
+        <div className={styles.wrapper}>
+          <div className={styles.wrapperLogo}>
+            <Link onClick={handlerClear} to="/">
+              <img src={meliLogo} alt={"LOGO_TITLE"} />
+            </Link>
+          </div>
+          <form
+            onSubmit={(e) => getProducts(e)}
+            className={styles.wrapper_search_form}
+          >
+            <input
+              className={styles.wrapper_form_search_input}
+              type="text"
+              placeholder={PLACEHOLDER_INPUT}
+              onChange={(e) => dispatch(setSearch(e.target.value))}
+              value={search}
             />
-          </button>
-        </form>
+            <button type="submit" className={styles.wrapper_form_search_submit}>
+              <img
+                src={meliSearch}
+                alt={"search"}
+                width={"20px"}
+                height={"20px"}
+                style={{ marginLeft: "-20px", marginTop: "4px" }}
+              />
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
