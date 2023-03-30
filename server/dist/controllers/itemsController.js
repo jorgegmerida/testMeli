@@ -70,7 +70,6 @@ exports.itemId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const responseItemId = yield axios.get(`${process.env.ITEM_ID}${idItem}`);
         const responseFinalItemId = responseItemId.data;
-        console.log(responseItemId.data);
         if (responseItemId) {
             try {
                 const responseItemDes = yield axios.get(`${process.env.ITEM_ID}${idItem}/description`);
