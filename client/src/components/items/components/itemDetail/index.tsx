@@ -9,7 +9,7 @@ import ReactLoading from "react-loading";
 import { NOT_DESCRIPTION } from "common/constants";
 import { formatMoney } from "common/utils";
 import { Breadcrumb } from "components/breadcrumb";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export const ItemDetail: React.FC = () => {
   const [showItemDetail, setShowItemDetail] = React.useState<boolean>(false);
@@ -42,7 +42,7 @@ export const ItemDetail: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <HelmetProvider>
       <Helmet>
         <title>{itemDetail?.item?.title}</title>
         <meta name="description" content={itemDetail?.item?.description} />
@@ -109,6 +109,6 @@ export const ItemDetail: React.FC = () => {
           />
         )}
       </div>
-    </>
+    </HelmetProvider>
   );
 };

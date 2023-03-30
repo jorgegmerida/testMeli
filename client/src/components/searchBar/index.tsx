@@ -19,7 +19,7 @@ import {
 } from "store/slices/products";
 import { RootState } from "store";
 import { INITIAL_STORE, PLACEHOLDER_INPUT } from "common/constants";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export const SearchBar: React.FC = () => {
   const fetcher = useGetFetcher();
@@ -69,7 +69,7 @@ export const SearchBar: React.FC = () => {
   };
 
   return (
-    <>
+    <HelmetProvider>
       <Helmet>
         <title>{location.pathname === "/" && "Home"}</title>
       </Helmet>
@@ -103,6 +103,6 @@ export const SearchBar: React.FC = () => {
           </form>
         </div>
       </div>
-    </>
+    </HelmetProvider>
   );
 };

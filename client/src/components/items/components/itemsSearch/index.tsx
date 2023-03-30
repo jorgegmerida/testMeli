@@ -19,7 +19,7 @@ import { Item } from "models";
 import { formatMoney } from "common/utils";
 import { INITIAL_STORE } from "common/constants";
 import { Breadcrumb } from "components/breadcrumb";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export const ItemsSearch: React.FC = () => {
   const { list, showItems, search, errors } = useSelector(
@@ -80,7 +80,7 @@ export const ItemsSearch: React.FC = () => {
   };
 
   return (
-    <>
+    <HelmetProvider>
       <Helmet>
         <title>{search.length !== 0 ? search : "Home"}</title>
       </Helmet>
@@ -148,6 +148,6 @@ export const ItemsSearch: React.FC = () => {
           />
         )}
       </div>
-    </>
+    </HelmetProvider>
   );
 };
