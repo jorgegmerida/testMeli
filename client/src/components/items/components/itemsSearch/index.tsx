@@ -116,8 +116,8 @@ export const ItemsSearch: React.FC = () => {
                                 <img
                                   src={freeShipping}
                                   alt="item"
-                                  width={"24px"}
-                                  height={"24px"}
+                                  width={"21px"}
+                                  height={"20px"}
                                 />
                               </div>
                             )}
