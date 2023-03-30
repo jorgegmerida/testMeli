@@ -11,6 +11,10 @@ interface Props {
 }
 
 export const Breadcrumb: React.FC<Props> = ({ list }) => {
+  const { search, itemDetail, showItems } = useSelector(
+    (state: RootState) => state.products.initialState
+  );
+
   const [categoryItem, setCategoryItem] = React.useState<Icategory>({
     id: "",
     name: "",
@@ -18,15 +22,9 @@ export const Breadcrumb: React.FC<Props> = ({ list }) => {
 
   const location = useLocation();
 
-  const dispath = useDispatch();
-
   const { category } = list.filter;
 
   const getCategories = UseGetCategory();
-
-  const { search, itemDetail } = useSelector(
-    (state: RootState) => state.products.initialState
-  );
 
   React.useEffect(() => {
     const categoryItem = getCategories(
@@ -40,10 +38,28 @@ export const Breadcrumb: React.FC<Props> = ({ list }) => {
 
   return (
     <div className={styles.container}>
-      {location.pathname !== `/items/${itemDetail.item?.id}` ? (
-        category?.map((cat, index) => {
-          return (
-            <div key={index} className={styles.category} id={"category"}>
+      {location.pathname !== `/items/${itemDetail.item?.id}` && showItems
+        ? category?.map((cat, index) => {
+            return (
+              <div key={index} className={styles.category} id={"category"}>
+                <Link
+                  to={`/items?search=${search}`}
+                  className={
+                    location.pathname === "/"
+                      ? styles.breadcrumbActive
+                      : styles.breadcrumbNotActive
+                  }
+                >
+                  {cat.name}
+                  {index < list.filter?.category.length - 1 && (
+                    <span className={styles.breadcrumbArrow}>&gt;</span>
+                  )}
+                </Link>
+              </div>
+            );
+          })
+        : showItems && (
+            <div className={styles.category}>
               <Link
                 to={`/items?search=${search}`}
                 className={
@@ -52,28 +68,10 @@ export const Breadcrumb: React.FC<Props> = ({ list }) => {
                     : styles.breadcrumbNotActive
                 }
               >
-                {cat.name}{" "}
-                {index < list.filter?.category.length - 1 && (
-                  <span className={styles.breadcrumbArrow}>&gt;</span>
-                )}
+                {categoryItem?.name}{" "}
               </Link>
             </div>
-          );
-        })
-      ) : (
-        <div className={styles.category}>
-          <Link
-            to={`/items?search=${search}`}
-            className={
-              location.pathname === "/"
-                ? styles.breadcrumbActive
-                : styles.breadcrumbNotActive
-            }
-          >
-            {categoryItem?.name}{" "}
-          </Link>
-        </div>
-      )}
+          )}
     </div>
   );
 };

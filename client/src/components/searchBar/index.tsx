@@ -36,11 +36,10 @@ export const SearchBar: React.FC = () => {
 
   const getProducts = async (e) => {
     e.preventDefault();
-
-    dispatch(setShowItems(false));
-
     if (search.trim() === "") return;
     dispatch(clearListProducts(INITIAL_STORE.list));
+    dispatch(setShowItems(false));
+
     const url = `${process.env.REACT_APP_FETCH_ITEMS}?q=${search}`;
     try {
       const response = await fetcher(url);

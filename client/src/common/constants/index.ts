@@ -23,6 +23,7 @@ export const INITIAL_STORE = {
   },
   search: "",
   errors: false,
+  breadCrumb: { id: "", name: "" },
 };
 
 export const NOT_DESCRIPTION = "Este producto aún no tiene descripcion";
