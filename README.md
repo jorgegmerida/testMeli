@@ -86,24 +86,6 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
-
-## Test
-
-1. Run Test
-
-   ```sh
-   npm run test
-   ```
-
-2. Run Test-Coverage
-
-   ```sh
-   npm run test:coverage
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- CONTACT -->
 
 ## Contact
