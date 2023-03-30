@@ -15,7 +15,7 @@ export const NotFoundProduct: React.FC = () => {
         <div className={styles.containerUlBad}>
           <ul>
             <li>
-              <b>Revisá la ortografía</b>de la palabra.
+              <b>Revisá la ortografía</b> de la palabra.
             </li>
             <li>
               Utilizá <b>palabras más genéricas</b> ó menos palabras.
