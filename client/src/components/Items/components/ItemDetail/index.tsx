@@ -8,7 +8,7 @@ import styles from "./styles.module.scss";
 import ReactLoading from "react-loading";
 import { NOT_DESCRIPTION } from "common/constants";
 import { formatMoney } from "common/utils";
-import { Breadcrumb } from "components/breadcrumb";
+import { Breadcrumb } from "components/BreadCrumb";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export const ItemDetail: React.FC = () => {

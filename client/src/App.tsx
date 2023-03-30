@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { ItemsSearch } from "./components/items/components/itemsSearch";
+import { ItemsSearch } from "./components/Items/components/ItemsSearch";
 import { Header } from "./ui";
 import { Provider } from "react-redux";
 import { store } from "../src/store";
-import { ItemDetail } from "./components/items/components/itemDetail";
+import { ItemDetail } from "./components/Items/components/ItemDetail";
 import { NotFound } from "./components/NotFound";
-import { Items } from "./components/items";
+import { Items } from "./components/Items";
 import { RootApp } from "./components/RootApp";
 
 export default function App() {

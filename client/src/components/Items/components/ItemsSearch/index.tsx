@@ -18,7 +18,7 @@ import { NotFoundProduct } from "../NotFoundProduct";
 import { Item } from "models";
 import { formatMoney } from "common/utils";
 import { INITIAL_STORE } from "common/constants";
-import { Breadcrumb } from "components/breadcrumb";
+import { Breadcrumb } from "components/BreadCrumb";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export const ItemsSearch: React.FC = () => {
