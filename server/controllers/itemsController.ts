@@ -13,8 +13,7 @@ import {
 
 exports.itemsQuery = async (
   req: TypedRequestQuery<{ q: string }>,
-  res: TypedResponse<{}>,
-  next: Express.Application
+  res: TypedResponse<{}>
 ) => {
   let newItems = new Items();
   let newCategories = new Categories();
@@ -69,8 +68,7 @@ exports.itemsQuery = async (
 
 exports.itemId = async (
   req: Request<{ id: string }>,
-  res: TypedResponse<{}>,
-  next: Express.Application
+  res: TypedResponse<{}>
 ) => {
   let newItem = new ItemDes();
 
@@ -85,8 +83,8 @@ exports.itemId = async (
         const responseItemDes = await axios.get(
           `${process.env.ITEM_ID}${idItem}/description`
         );
-        const resStringItemDes = CircularJSON.stringify(responseItemDes.data);
-        const responseFinalItemDes = JSON.parse(resStringItemDes);
+        const resStringItemDes = responseItemDes.data;
+        const responseFinalItemDes = resStringItemDes;
 
         (newItem.id = responseFinalItemId.id),
           (newItem.title = responseFinalItemId.title),

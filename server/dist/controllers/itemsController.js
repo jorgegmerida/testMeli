@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios = require("axios");
 const CircularJSON = require("circular-json");
 const models_1 = require("../utils/models");
-exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.itemsQuery = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d;
     let newItems = new models_1.Items();
     let newCategories = new models_1.Categories();
@@ -63,18 +63,19 @@ exports.itemsQuery = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         });
     }
 });
-exports.itemId = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.itemId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _e, _f, _g, _h, _j, _k, _l;
     let newItem = new models_1.ItemDes();
     const idItem = req.params.id;
     try {
         const responseItemId = yield axios.get(`${process.env.ITEM_ID}${idItem}`);
         const responseFinalItemId = responseItemId.data;
+        console.log(responseItemId.data);
         if (responseItemId) {
             try {
                 const responseItemDes = yield axios.get(`${process.env.ITEM_ID}${idItem}/description`);
-                const resStringItemDes = CircularJSON.stringify(responseItemDes.data);
-                const responseFinalItemDes = JSON.parse(resStringItemDes);
+                const resStringItemDes = responseItemDes.data;
+                const responseFinalItemDes = resStringItemDes;
                 (newItem.id = responseFinalItemId.id),
                     (newItem.title = responseFinalItemId.title),
                     (newItem.price = {
