@@ -8,38 +8,12 @@ const persistConfig = {
   storage,
 };
 
-const loadState = () => {
-  try {
-    const serializedState = localStorage.getItem("state");
-    if (serializedState === null) {
-      return undefined;
-    }
-    return JSON.parse(serializedState);
-  } catch (e) {
-    return undefined;
-  }
-};
-
-const saveState = (state) => {
-  try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem("state", serializedState);
-  } catch (e) {
-    // Ignore write errors;
-  }
-};
-
-const persistedReducer = loadState();
+const persistedReducer = persistReducer(persistConfig, productSlice);
 
 export const store = configureStore({
   reducer: {
-    products: productSlice,
-    persistedReducer,
+    products: persistedReducer,
   },
-});
-
-store.subscribe(() => {
-  saveState(store.getState());
 });
 
 export type RootState = ReturnType<typeof store.getState>;
