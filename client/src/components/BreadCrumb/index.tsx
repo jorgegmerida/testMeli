@@ -1,4 +1,4 @@
-import { Icategory, List } from "models";
+import { Icategory, List } from "common/models";
 import * as React from "react";
 import styles from "./styles.module.scss";
 import { Link, useLocation } from "react-router-dom";
@@ -10,7 +10,7 @@ interface Props {
   list: List;
 }
 
-export const Breadcrumb: React.FC<Props> = ({ list }) => {
+export const BreadCrumb: React.FC<Props> = ({ list }) => {
   const { search, itemDetail, showItems } = useSelector(
     (state: RootState) => state.products.initialState
   );

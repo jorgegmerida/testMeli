@@ -1,6 +1,6 @@
 /* Hook para obtener la categoria del item y armar el breadcrumb en detalle de producto*/
 
-import { Icategory, Item, List } from "models";
+import { Icategory, Item, List } from "common/models";
 
 export const UseGetCategory = () => {
   const categoryItem = (

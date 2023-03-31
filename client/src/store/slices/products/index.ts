@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CounterState } from "models";
+import { CounterState } from "common/models";
 import { INITIAL_STORE } from "common/constants";
 
 const initialState: CounterState = INITIAL_STORE;

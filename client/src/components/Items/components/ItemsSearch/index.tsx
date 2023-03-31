@@ -15,10 +15,10 @@ import { useGetFetcher } from "hooks/UseFetcher";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ReactLoading from "react-loading";
 import { NotFoundProduct } from "../NotFoundProduct";
-import { Item } from "models";
+import { Item } from "common/models";
 import { formatMoney } from "common/utils";
 import { INITIAL_STORE } from "common/constants";
-import { Breadcrumb } from "components/BreadCrumb";
+import { BreadCrumb } from "components/BreadCrumb";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export const ItemsSearch: React.FC = () => {
@@ -85,7 +85,7 @@ export const ItemsSearch: React.FC = () => {
         <title>{search.length !== 0 ? search : "Home"}</title>
       </Helmet>
       <div className={styles.container}>
-        <Breadcrumb list={list} />
+        <BreadCrumb list={list} />
         {showItems && items?.length !== 0 ? (
           <div className={styles.card}>
             <div className={styles.items}>
