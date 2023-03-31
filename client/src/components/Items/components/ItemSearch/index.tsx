@@ -21,7 +21,7 @@ import { INITIAL_STORE } from "common/constants";
 import { BreadCrumb } from "components/BreadCrumb";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
-export const ItemsSearch: React.FC = () => {
+export const ItemSearch: React.FC = () => {
   const { list, showItems, search, errors } = useSelector(
     (state: RootState) => state.products.initialState
   );
