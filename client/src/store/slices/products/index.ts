@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { CounterState } from "common/models";
 import { INITIAL_STORE } from "common/constants";
 
-const initialState: CounterState = INITIAL_STORE;
+const res = JSON.parse(localStorage.getItem("state"));
+console.log(res.products.initialState);
+
+const initialState = JSON.parse(localStorage.getItem("state")).products
+  .initialState;
 
 export const productSlice = createSlice({
   name: "products",
